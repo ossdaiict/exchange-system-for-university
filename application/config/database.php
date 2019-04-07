@@ -97,7 +97,8 @@ $query_builder = TRUE;
 // );
 
 $db['default'] = array(
-	'dsn'	=> 'host=ec2-184-72-238-22.compute-1.amazonaws.com;port=5432;user=awqdbdazqmgxld;password=f74b17f27c28b1cddb653cf25160f20b4daaa4df2ad149992ad433f0c0add760;sslmode=require;dbname=d7snemkkq9alb4;',
+	'dsn'	=> 'postgres://awqdbdazqmgxld:f74b17f27c28b1cddb653cf25160f20b4daaa4df2ad149992ad433f0c0add760@ec2-184-72-238-22.compute-1.amazonaws.com:5432/d7snemkkq9alb4',
+	//'dsn'	=> 'host=ec2-184-72-238-22.compute-1.amazonaws.com;port=5432;user=awqdbdazqmgxld;password=f74b17f27c28b1cddb653cf25160f20b4daaa4df2ad149992ad433f0c0add760;sslmode=require;dbname=d7snemkkq9alb4;',
 	//'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;',
 	//'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;user=postgres;password=root',
 	'hostname' => 'localhost',
