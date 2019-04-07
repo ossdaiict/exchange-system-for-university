@@ -73,10 +73,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+// $db['default'] = array(
+// 	'dsn'	=> '',
+// 	//'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;user=postgres;password=root',
+// 	'hostname' => 'localhost',
+// 	'username' => 'root',
+// 	'password' => '',
+// 	'database' => 'campus_exchange_migration',
+// 	'dbdriver' => 'mysqli',
+// 	'dbprefix' => '',
+// 	'pconnect' => FALSE,
+// 	'db_debug' => (ENVIRONMENT !== 'production'),
+// 	'cache_on' => FALSE,
+// 	'cachedir' => '',
+// 	'char_set' => 'utf8',
+// 	'dbcollat' => 'utf8_general_ci',
+// 	'swap_pre' => '',
+// 	'encrypt' => FALSE,
+// 	'compress' => FALSE,
+// 	'stricton' => FALSE,
+// 	'failover' => array(),
+// 	'save_queries' => TRUE,
+// );
+
 $db['default'] = array(
-	'dsn'	=> 'mysql:host=localhost;dbname=campus_exchange',
+	'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;',
+	//'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;user=postgres;password=root',
 	'hostname' => 'localhost',
-	'username' => '',
+	'username' => 'postgres',
 	'password' => 'root',
 	'database' => 'campus_exchange',
 	'dbdriver' => 'pdo',
@@ -92,5 +116,6 @@ $db['default'] = array(
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
-	'save_queries' => TRUE
+	'save_queries' => TRUE,
+	'schema'=>'campus_exchange_migration'
 );
