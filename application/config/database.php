@@ -104,7 +104,7 @@ $db['default'] = array(
 	'username' => 'postgres',
 	'password' => 'root',
 	'database' => 'campus_exchange',
-	'dbdriver' => 'pdo',
+	'dbdriver' => 'postgre',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
