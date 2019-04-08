@@ -39,8 +39,15 @@ class Register extends CI_Controller {
 			];
       $register=false;
 			$register=$this->rm->set_do_register_data($creds);
-			$msg['msg']=$register?'<p>Check your mail to verify account</p>':'<p>Invalid ID or Password</p>';
+			$msg['msg']=$register?'<p>Check your mail to verify account</p>':'<p>Try Again</p>';
 			$this->load->view('register', $msg);
     }
+	}
+	public function verify($user_id, $secret)
+	{
+		//validate both fields
+		//if error show a error page
+		//else set is_verified to 1
+		// redirect to login
 	}
 }
