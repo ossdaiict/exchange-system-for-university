@@ -17,15 +17,19 @@
                 <h4>Login</h4>
                  <form action="<?=site_url('login/do_login')?>" method="POST" class="aa-login-form">
                   <label for="">DA Student ID<span>*</span></label>
-                  <input name="r_user_id" type="text" placeholder="201xxxxxx" value="<?=set_value('r_user_id');?>" required>
+                  <input name="r_user_id" type="text" placeholder="201xxxxxx" value="<?=set_value('r_user_id');?>" required autofocus>
                   <?=form_error('r_user_id');?>
                    <label for="">Password<span>*</span></label>
                     <input name="r_password" type="password" placeholder="Password" required>
                     <?=form_error('r_password');?>
                     <?=isset($error)?$error:''?>
-                    <button type="submit" class="aa-browse-btn">Login</button>
                     <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
-                    <p class="aa-lost-password"><a href="#">Lost your password?</a></p>
+                    </br>
+                    <button type="submit" class="aa-browse-btn">Login</button>
+                    <button type="submit" class="aa-browse-btn pull-right">Reset Password</button>
+                    </br>
+                    </br>
+                    <p class="aa-lost-password"><a href="<?=site_url('register/')?>">Don't have an account ?</a></p>
                   </form>
                 </div>
               </div>
