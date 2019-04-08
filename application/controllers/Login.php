@@ -11,7 +11,6 @@ class Login extends CI_Controller {
 	public function index()
 	{
 		$this->load->database();
-		$this->db->query("DROP SCHEMA campus_exchange CASCADE");
 		print_r($this->db->get('category')->result());
 	}
 	public function do_login()
