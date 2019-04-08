@@ -23,8 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-//$config['base_url'] = 'https://campus-exchange.herokuapp.com/';
-$config['base_url'] = 'http://localhost/project/exchange-system-for-university/';
+$flag=true;
+if($flag)
+	$config['base_url'] = 'https://campus-exchange.herokuapp.com/';
+else
+	$config['base_url'] = 'http://localhost/project/exchange-system-for-university/';
 
 /*
 |--------------------------------------------------------------------------
@@ -381,8 +384,10 @@ $config['encryption_key'] = '';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
-//$config['sess_save_path'] = sys_get_temp_dir();
+if($flag)
+	$config['sess_save_path'] = sys_get_temp_dir();
+else
+	$config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;

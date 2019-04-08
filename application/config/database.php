@@ -95,29 +95,51 @@ $query_builder = TRUE;
 // 	'failover' => array(),
 // 	'save_queries' => TRUE,
 // );
-
-$db['default'] = array(
-	//'dsn'	=> 'postgres://awqdbdazqmgxld:f74b17f27c28b1cddb653cf25160f20b4daaa4df2ad149992ad433f0c0add760@ec2-184-72-238-22.compute-1.amazonaws.com:5432/d7snemkkq9alb4',
-	'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;',
-	//'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;user=postgres;password=root',
-	'hostname' => 'localhost',
-	'username' => 'postgres',
-	'password' => 'root',
-	'database' => 'campus_exchange',
-	//'dbdriver' => 'postgre',
-	'dbdriver' => 'PDO',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE,
-	'schema'=>'campus_exchange'
-);
+$flag=true;
+if($flag)
+	$db['default'] = array(
+		'dsn'	=> 'postgres://awqdbdazqmgxld:f74b17f27c28b1cddb653cf25160f20b4daaa4df2ad149992ad433f0c0add760@ec2-184-72-238-22.compute-1.amazonaws.com:5432/d7snemkkq9alb4',
+		'hostname' => 'localhost',
+		'username' => 'postgres',
+		'password' => 'root',
+		'database' => 'campus_exchange',
+		'dbdriver' => 'postgre',
+		'dbprefix' => '',
+		'pconnect' => FALSE,
+		'db_debug' => (ENVIRONMENT !== 'production'),
+		'cache_on' => FALSE,
+		'cachedir' => '',
+		'char_set' => 'utf8',
+		'dbcollat' => 'utf8_general_ci',
+		'swap_pre' => '',
+		'encrypt' => FALSE,
+		'compress' => FALSE,
+		'stricton' => FALSE,
+		'failover' => array(),
+		'save_queries' => TRUE,
+		'schema'=>'campus_exchange'
+	);
+else
+	$db['default'] = array(
+		'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;',
+		//'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;user=postgres;password=root',
+		'hostname' => 'localhost',
+		'username' => 'postgres',
+		'password' => 'root',
+		'database' => 'campus_exchange',
+		'dbdriver' => 'PDO',
+		'dbprefix' => '',
+		'pconnect' => FALSE,
+		'db_debug' => (ENVIRONMENT !== 'production'),
+		'cache_on' => FALSE,
+		'cachedir' => '',
+		'char_set' => 'utf8',
+		'dbcollat' => 'utf8_general_ci',
+		'swap_pre' => '',
+		'encrypt' => FALSE,
+		'compress' => FALSE,
+		'stricton' => FALSE,
+		'failover' => array(),
+		'save_queries' => TRUE,
+		'schema'=>'campus_exchange'
+	);
