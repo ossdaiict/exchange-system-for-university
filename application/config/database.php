@@ -117,7 +117,7 @@ if($flag)
 		'stricton' => FALSE,
 		'failover' => array(),
 		'save_queries' => TRUE,
-		'schema'=>'campus_exchange'
+		'schema'=>'public'
 	);
 else
 	$db['default'] = array(
@@ -141,5 +141,5 @@ else
 		'stricton' => FALSE,
 		'failover' => array(),
 		'save_queries' => TRUE,
-		'schema'=>'campus_exchange'
+		'schema'=>'public'
 	);
