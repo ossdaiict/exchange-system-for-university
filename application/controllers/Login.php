@@ -11,8 +11,8 @@ class Login extends CI_Controller {
 	public function index()
 	{
 		$this->load->database();
-		$this->db->query("DROP SCHEMA campus_exchange CASCADE");
-		$this->db->query("SET search_path TO public");
+		// $this->db->query("DROP SCHEMA campus_exchange CASCADE");
+		// $this->db->query("SET search_path TO public");
 		print_r($this->db->get('category')->result());
 	}
 	public function do_login()
