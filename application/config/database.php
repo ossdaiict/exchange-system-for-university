@@ -97,15 +97,15 @@ $query_builder = TRUE;
 // );
 
 $db['default'] = array(
-	//'dsn'	=> 'postgres://awqdbdazqmgxld:f74b17f27c28b1cddb653cf25160f20b4daaa4df2ad149992ad433f0c0add760@ec2-184-72-238-22.compute-1.amazonaws.com:5432/d7snemkkq9alb4',
-	'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;',
+	'dsn'	=> 'postgres://awqdbdazqmgxld:f74b17f27c28b1cddb653cf25160f20b4daaa4df2ad149992ad433f0c0add760@ec2-184-72-238-22.compute-1.amazonaws.com:5432/d7snemkkq9alb4',
+	//'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;',
 	//'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=campus_exchange;user=postgres;password=root',
 	'hostname' => 'localhost',
 	'username' => 'postgres',
 	'password' => 'root',
 	'database' => 'campus_exchange',
-	//'dbdriver' => 'postgre',
-	'dbdriver' => 'PDO',
+	'dbdriver' => 'postgre',
+	//'dbdriver' => 'PDO',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
