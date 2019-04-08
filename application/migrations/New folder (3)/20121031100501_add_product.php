@@ -42,6 +42,10 @@ class Migration_Add_Category extends CI_Migration {
                                 'type' => 'INT',
                                 'constraint' => 11,
                         ),
+                        'status' => array(
+                                'type' => 'TINYINT',
+                                'constraint' => 4,
+                        ),
 
                         CREATE TABLE `product` (
                                 `price` int(11) NOT NULL,
