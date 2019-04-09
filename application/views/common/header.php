@@ -53,7 +53,18 @@
                   <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
                   <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
                   <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
-                  <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                  <li>
+<?php
+                      if($this->ss->email)
+                      {
+?>                      <a href="<?=site_url('logout/')?>">Logout</a>
+<?php                 }
+                      else
+                      {
+?>                      <a href="" data-toggle="modal" data-target="#login-modal">Login</a>
+<?php                 }
+?>
+                  </li>
                 </ul>
               </div>
             </div>

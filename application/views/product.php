@@ -1,7 +1,7 @@
 <?php
-  // echo "<pre>";
-  // print_r($products);
-  // die("hello");
+//  echo "<pre>";
+//  print_r($products);
+//  die("hello");
 ?>
 <?php
 	$path_prefix=base_url('asset/user/');
@@ -43,27 +43,50 @@
             </div>
             <div class="aa-product-catg-body">
               <ul class="aa-product-catg list">
-              {products}
               <!-- start single product item -->
+              <?php foreach($products as $p){?>
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="<?=site_url('product/')?>{product_id}">"><img style="max-width:250px;max-height:300px;" src="<?=$path_prefix?>img/product/{main_image}" alt="polo shirt img"></a>
-                    <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
+                    <a class="aa-product-img" href="<?=site_url('product/')?><?=$p->product_id?>"><img style="max-width:250px;max-height:300px;" src="<?=$path_prefix?>img/product/<?=$p->main_image?>" alt="polo shirt img"></a>
+
+                    <?php
+                      if($p->seller_id!=$this->ss->user_id)
+                      {
+?>
+                        <a class="aa-add-card-btn" href="<?=base_url('product/toggle_wishlist/');?><?=$p->product_id?>"><span class="<?=$p->user_id!=''?'fa fa-heart':'fa fa-heart-o'?>"></span><?=$p->user_id!=''?'Remove from wishlist':'Add to wishlist'?></a>
+<?php                 }
+                      else
+                      {
+?>
+                        <a class="aa-add-card-btn" href="<?=base_url('product/get_product_update/');?><?=$p->product_id?>"><span class="fa fa-edit"></span>Update Info.</a>
+
+<?php                 }
+?>
                     <figcaption>
-                      <h4 class="aa-product-title"><a href="<?=site_url('product/')?>{product_id}">{name}</a></h4>
-                      <span class="aa-product-price">{price}</span><span class="aa-product-price"><del>$65.50</del></span>
-                      <p class="aa-product-descrip">{description}</p>
+                      <h4 class="aa-product-title"><a href="<?=site_url('product/')?><?=$p->product_id?>"><?=$p->name?></a></h4>
+                      <span class="aa-product-price"><?=$p->price?></span><span class="aa-product-price"><del>$65.50</del></span>
+                      <p class="aa-product-descrip"><?=$p->description?></p>
                     </figcaption>
                   </figure>                         
                   <div class="aa-product-hvr-content">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
-                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>                            
+<?php
+                      if($p->seller_id!=$this->ss->user_id)
+                      {
+?>
+                        <a href="<?=base_url('product/toggle_wishlist/');?><?=$p->product_id?>" data-toggle="tooltip" data-placement="top" title="<?=$p->user_id!=''?'Remove from wishlist':'Add to wishlist'?>"><span class="<?=$p->user_id!=''?'fa fa-heart':'fa fa-heart-o'?>"></span></a>
+<?php                 }
+                      else
+                      {
+?>
+                        <a href="<?=base_url('product/get_product_update/');?><?=$p->product_id?>" data-toggle="tooltip" data-placement="top" title="Update info."><span class="fa fa-edit"></span></a>                      
+<?php                 }
+?>
+                        <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
                   <!-- product badge -->
                   <span class="aa-badge aa-sale" href="#">SALE!</span>
                 </li>
-                {/products}
+              <?php } ?>
               </ul>
               <!-- quick view modal -->
               <div class="modal fade" id="quick-view-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
