@@ -65,6 +65,7 @@
                     <figcaption>
                       <h4 class="aa-product-title"><a href="<?=site_url('product/')?><?=$p->product_id?>"><?=$p->name?></a></h4>
                       <span class="aa-product-price"><?=$p->price?></span><span class="aa-product-price"><del>$65.50</del></span>
+                      <p class="aa-product-descrip">Category : <?=$p->category?></p>
                       <p class="aa-product-descrip"><?=$p->description?></p>
                     </figcaption>
                   </figure>                         
