@@ -34,6 +34,7 @@ class Register extends CI_Controller {
 				'password'=>$this->input->post('c_password'),
 				'name'=>$this->input->post('c_name'),
 				'contact_no'=>$this->input->post('c_contact_no'),
+				'email'=>$this->input->post('c_user_id').'@daiict.ac.in',
 				'verification_secret'=>random_string('alnum', 32),
 				'is_verified'=> 0
 			];

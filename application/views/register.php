@@ -25,7 +25,7 @@
                   <?=form_error('c_name');?>
 
                   <label for="">Contact No<span>*</span></label>
-                    <input name="c_contact_no" type="password" placeholder="9879xxxxxx" required>
+                    <input name="c_contact_no" type="text" placeholder="9879xxxxxx" required>
                     <?=form_error('c_contact_no');?>
 
                   <label for="">Password<span>*</span></label>
