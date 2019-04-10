@@ -47,23 +47,24 @@
               <?php foreach($products as $p){?>
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="<?=site_url('product/')?><?=$p->product_id?>"><img style="max-width:250px;max-height:300px;" src="<?=$path_prefix?>img/product/<?=$p->main_image?>" alt="polo shirt img"></a>
+                    <a class="aa-product-img" href="<?=site_url('product/'.$p->product_id)?>"><img style="max-width:250px;max-height:300px;" src="<?=$path_prefix?>img/product/<?=$p->main_image?>" alt="polo shirt img"></a>
 
                     <?php
                       if($p->seller_id!=$this->ss->user_id)
                       {
 ?>
-                        <a class="aa-add-card-btn" href="<?=base_url('product/toggle_wishlist/');?><?=$p->product_id?>"><span class="<?=$p->user_id!=''?'fa fa-heart':'fa fa-heart-o'?>"></span><?=$p->user_id!=''?'Remove from wishlist':'Add to wishlist'?></a>
-<?php                 }
+                        <a class="aa-add-card-btn" href="<?=base_url('product/toggle_wishlist/'.$p->product_id);?>"><span class="<?=$p->wishlist_user_id!=''?'fa fa-heart':'fa fa-heart-o'?>"></span><?=$p->wishlist_user_id!=''?'Remove from wishlist':'Add to wishlist'?></a>
+<?php
+                      }
                       else
                       {
 ?>
-                        <a class="aa-add-card-btn" href="<?=base_url('product/get_product_update/');?><?=$p->product_id?>"><span class="fa fa-edit"></span>Update Info.</a>
+                        <a class="aa-add-card-btn" href="<?=base_url('product/get_product_update/'.$p->product_id);?>"><span class="fa fa-edit"></span>Update Info.</a>
 
 <?php                 }
 ?>
                     <figcaption>
-                      <h4 class="aa-product-title"><a href="<?=site_url('product/')?><?=$p->product_id?>"><?=$p->name?></a></h4>
+                      <h4 class="aa-product-title"><a href="<?=site_url('product/'.$p->product_id)?>"><?=$p->name?></a></h4>
                       <span class="aa-product-price"><?=$p->price?></span><span class="aa-product-price"><del>$65.50</del></span>
                       <p class="aa-product-descrip">Category : <?=$p->category?></p>
                       <p class="aa-product-descrip"><?=$p->description?></p>
@@ -74,18 +75,43 @@
                       if($p->seller_id!=$this->ss->user_id)
                       {
 ?>
-                        <a href="<?=base_url('product/toggle_wishlist/');?><?=$p->product_id?>" data-toggle="tooltip" data-placement="top" title="<?=$p->user_id!=''?'Remove from wishlist':'Add to wishlist'?>"><span class="<?=$p->user_id!=''?'fa fa-heart':'fa fa-heart-o'?>"></span></a>
+                        <a href="<?=base_url('product/toggle_wishlist/'.$p->product_id);?>" data-toggle="tooltip" data-placement="top" title="<?=$p->wishlist_user_id!=''?'Remove from wishlist':'Add to wishlist'?>"><span class="<?=$p->wishlist_user_id!=''?'fa fa-heart':'fa fa-heart-o'?>"></span></a>
 <?php                 }
                       else
                       {
 ?>
-                        <a href="<?=base_url('product/get_product_update/');?><?=$p->product_id?>" data-toggle="tooltip" data-placement="top" title="Update info."><span class="fa fa-edit"></span></a>                      
+                        <a href="<?=base_url('product/get_product_update/'.$p->product_id);?>" data-toggle="tooltip" data-placement="top" title="Update info."><span class="fa fa-edit"></span></a>                      
 <?php                 }
 ?>
                         <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
                   <!-- product badge -->
-                  <span class="aa-badge aa-sale" href="#">SALE!</span>
+                  <span class="aa-badge aa-sale" href="#">
+<?php
+$status="";
+  switch($p->report_status)
+  {
+    case 1:
+      $status="Reported | ";
+    break;
+  }
+  switch($p->product_status)
+  {
+    case 0:
+      $status.="Available";
+    break;
+    case 1:
+    case 2:
+      $status.="Available";
+    break;
+    case 3:
+      $status.="Sold";
+    break;
+  }
+  echo $status;
+?>
+
+                  </span>
                 </li>
               <?php } ?>
               </ul>
