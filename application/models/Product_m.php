@@ -34,9 +34,9 @@ class Product_m extends CI_Model
   public function get_product_data($logged_in_user_id, $id=false)
   {
     $data = $this->db
-      ->select('p.*, w.user_id AS wishlist_user_id, t.buyer_id, t.price, t.date_sold')
+      ->select('p.*, w.wishlist_user_id, t.buyer_id, t.price, t.date_sold')
       ->from('product p')
-      ->join('wishlist w', "p.product_id=w.product_id and w.user_id={$logged_in_user_id}", 'left')
+      ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id={$logged_in_user_id}", 'left')
       ->join('transaction t', 'p.product_id=t.product_id', 'left')
       ->where(['p.product_id'=>$id])
       ->get()
