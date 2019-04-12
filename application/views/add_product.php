@@ -15,7 +15,9 @@
               <div class="col-md-6 col-md-offset-3">
                 <div class="aa-myaccount-login">
                 <h4>Upload Product</h4>
-                <?php if(isset($msg)) { echo $msg; } ?>
+                <?php if(isset($msg)) { echo $msg."<br>"; }
+                if(isset($error_msg)) { echo $error_msg."<br>"; }
+                ?>
                  <form action="<?=site_url('Product2/add_product')?>" method="POST" class="aa-login-form" enctype="multipart/form-data">
                   <label for="">Product Name<span>*</span></label>
                   <input name="c_name" type="text" placeholder="iPhone Xs" value="<?=set_value('c_name');?>" required autofocus>
@@ -31,7 +33,7 @@
 
                   <label for="">Category<span>*</span></label>
                     <select name="c_category" id="" class="form-control" required>
-                        <option value="" disabled selected>Select Category</option>
+                        <option value="0" disabled selected>Select Category</option>
                         <?php
                             foreach($cat as $c)
                             {
@@ -46,6 +48,9 @@
 
                     <label for="">Image<span>*</span></label><input type="file" name="c_main_image" accept="image/*" class="form-control" style="width:100%" required>
                       <?=form_error('c_main_image');?>
+                      <?php if(isset($error)) { echo $error; }?>
+                      <br>
+                    <label for="">Secondary Images</label><input type="file" name="c_sec_image[]" multiple="multiple" accept="image/*" class="form-control" style="width:100%">
                       <?php if(isset($error)) { echo $error; }?>
                       <br>
                     <button type="submit" class="aa-browse-btn">Upload Product</button>
