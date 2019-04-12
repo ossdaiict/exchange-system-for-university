@@ -44,7 +44,101 @@
                       <p class="aa-product-avilability">Avilability: <span>In stock</span></p>
                     </div>
                     <p>{description}</p>
-                    <h4>Size</h4>
+										<p>
+<?php
+		if($product_status!=3) //unsold
+		{
+			if($this->ss->user_id==$seller_id) //seller
+			{
+				if($product_status==0) //available
+				{
+?>
+          <a href="<?=site_url('product/get_product_update/'.$product_id)?>">Update Product</a>
+<?php
+					if($wishlist_count>0)
+          {
+?>
+            <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>" method="POST">
+<?php
+              if($seller_id==$this->ss->user_id)
+              {
+?>
+                <select name="c_buyer_id" >
+<?php
+                  foreach($wishlist_data as $wd)
+                  {
+?>
+                    <option value="<?=$wd->wishlist_user_id?>"><?=$wd->name?></option>
+<?php
+                  }
+?>
+                </select>
+<?php
+              }
+?>
+              <input name="c_price" type="text" placeholder="final price">
+              <input type="submit" value="Mark">
+            </form>
+<?php
+          }
+				}
+				else if($product_status==1)
+        {
+?>
+          <form action="<?=site_url('product/answer_popup/'.$product_id)?>" method="POST">
+            <p>Seller of this product has marked you as buyer with final price of <?=$price?> for this product, please confirm the same !</p> 
+            <input type="radio" name="c_confirm" value="no"> NO, i didn't purchase</br>
+            <input type="radio" name="c_confirm" value="yes"> YES, i did</br>
+            <button type="submit">Confirm</button>
+          </form>
+<?php 
+        }
+				else if($product_status==2)
+					echo '<p>waiting for buyers confirmation</p>';
+			}
+			else
+			{
+				if($this->ss->user_id!=$buyer_id && $report_status<2)
+				{
+?>
+					<a class="aa-add-card-btn" href="<?=base_url('product/toggle_wishlist/'.$product_id.'/1');?>"><span class="<?=$wishlist_user_id!=''?'fa fa-heart':'fa fa-heart-o'?>"></span><?=$this->ss->user_id!=$wishlist_user_id?'Add to wishlist':'Remove from wishlist'?></a>
+<?php
+          if($wishlist_user_id==$this->ss->user_id)
+          {
+            ?>
+              <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>">
+                <input type="text" placeholder="final price">
+                <input type="submit" value="Mark">
+              </form>
+
+            <?php
+          }
+				}
+				else if($product_status==1)
+					echo 'waiting for sellers confirmation';
+				else if($product_status==2)
+        {
+?>
+          <form action="<?=site_url('product/answer_popup/'.$product_id)?>" method="POST">
+            <p>Seller of this product has marked you as buyer with final price of <?=$price?> for this product, please confirm the same !</p> 
+            <input type="radio" name="c_confirm" value="no"> NO, i didn't purchase</br>
+            <input type="radio" name="c_confirm" value="yes"> YES, i did</br>
+            <button type="submit">Confirm</button>
+          </form>
+<?php
+        }
+			}
+		}
+		else
+		{
+			if($this->ss->user_id==$buyer_id)
+				echo 'bought, enable review';
+			else if($this->ss->user_id==$seller_id)
+				echo 'sold';
+		}
+?>
+										</p>
+										<h4>Size</h4>
                     <div class="aa-prod-view-size">
                       <a href="#">S</a>
                       <a href="#">M</a>
@@ -85,25 +179,13 @@
             </div>
             <div class="aa-product-details-bottom">
               <ul class="nav nav-tabs" id="myTab2">
-                <li><a href="#description" data-toggle="tab">Description</a></li>
                 <li><a href="#review" data-toggle="tab">Reviews</a></li>                
+                <li><a href="#description" data-toggle="tab">Description</a></li>
               </ul>
 
               <!-- Tab panes -->
               <div class="tab-content">
-                <div class="tab-pane fade in active" id="description">
-                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                  <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, culpa!</li>
-                    <li>Lorem ipsum dolor sit amet.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor qui eius esse!</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, modi!</li>
-                  </ul>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, iusto earum voluptates autem esse molestiae ipsam, atque quam amet similique ducimus aliquid voluptate perferendis, distinctio!</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ea, voluptas! Aliquam facere quas cumque rerum dolore impedit, dicta ducimus repellat dignissimos, fugiat, minima quaerat necessitatibus? Optio adipisci ab, obcaecati, porro unde accusantium facilis repudiandae.</p>
-                </div>
-                <div class="tab-pane fade " id="review">
+                <div class="tab-pane fade in active" id="review">
                  <div class="aa-product-review-area">
                    <h4>2 Reviews for T-Shirt</h4> 
                    <ul class="aa-review-nav">
@@ -123,6 +205,11 @@
                               <span class="fa fa-star"></span>
                               <span class="fa fa-star-o"></span>
                             </div>
+                            <script>
+                              jQuery(function($){
+                                alert("hello");
+                              });
+                            </script>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                           </div>
                         </div>
@@ -175,7 +262,19 @@
                       <button type="submit" class="btn btn-default aa-review-submit">Submit</button>
                    </form>
                  </div>
-                </div>            
+                </div>
+                <div class="tab-pane fade" id="description">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                  <ul>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, culpa!</li>
+                    <li>Lorem ipsum dolor sit amet.</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor qui eius esse!</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, modi!</li>
+                  </ul>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, iusto earum voluptates autem esse molestiae ipsam, atque quam amet similique ducimus aliquid voluptate perferendis, distinctio!</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ea, voluptas! Aliquam facere quas cumque rerum dolore impedit, dicta ducimus repellat dignissimos, fugiat, minima quaerat necessitatibus? Optio adipisci ab, obcaecati, porro unde accusantium facilis repudiandae.</p>
+                </div>
               </div>
             </div>
             <!-- Related product -->

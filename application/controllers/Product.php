@@ -19,53 +19,12 @@ class Product extends CI_Controller {
 		$this->parser->parse('product', $data);
 	}
 
-	public function product_detail($id, $user_id)
+	public function product_detail($id)
 	{
-		$this->ss->set_userdata(['user_id'=>$user_id]);
-		$d = null;
-		$d = $this->pm->get_product_data($user_id, $id);
-		echo "<pre>";
-		print_r($d);
-
-		if($d[0]->product_status!=3)
-		{
-			if($this->ss->user_id==$d[0]->seller_id)
-			{
-				echo 'seller, ';
-				if($d[0]->product_status==0)
-				{
-					echo 'update_info';
-					if($p[0]->wishlist_count>0)
-						echo 'MAB_button()';
-				}
-				else if($d[0]->product_status==1)
-					echo 'answer popup';
-			}
-			else
-			{
-				if($this->ss->user_id!=$d[0]->buyer_id)
-					echo 'add/remove wishlist';
-				else if($d[0]->product_status==2)
-					echo 'answer popup';
-			}
-		}
-		else
-		{
-			if($this->ss->user_id==$d[0]->buyer_id)
-				echo 'show in buy list';
-			else if($this->ss->user_id==$d[0]->seller_id)
-				echo 'show in sell list';
-		}
-
-
-
-
-
-
-
-
-
-
+		$data = null;
+		$data = $this->pm->get_product_data($this->ss->user_id, $id);
+		// echo "<pre>";
+		// print_r($data);
 
 
 		// switch($d[0]->product_status)
@@ -128,13 +87,20 @@ class Product extends CI_Controller {
 
 		// }
 
-		// echo "<pre>";
-		// print_r($data);
-		die("</br>hello");
-		$this->parser->parse('product_detail', $data[0]);
+
+		if(count($data)===1)
+		{
+			$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$id]);
+			// echo "<pre>";
+			// print_r($data);
+			// die("</br>hello");
+			$this->parser->parse('product_detail', $data[0]);			
+		}
+		else
+			redirect('error/404');
 	}
 
-	public function toggle_wishlist($id)
+	public function toggle_wishlist($id, $redirect_back=false)
 	{
 		if(is_numeric($id))
 		{
@@ -147,17 +113,74 @@ class Product extends CI_Controller {
 				$op = $this->pm->delete_wishlist_data($data);
 			else if($op===0)
 				$this->pm->set_wishlist_data($data);
-			redirect('product/');
+			if($redirect_back)
+				redirect('product/'.$id);
+			else
+				redirect('product/');
 			}
 		else
-			redirect('error');
+			redirect('error/404');
 	}
 	public function get_product_update($id)//load product info and redirect to product update page for seller
 	{
-
+		echo "product update page goes here";
 	}
 	public function set_product_update($id)//update product info and redirect to product page??
 	{
 
+	}
+
+	public function mark_as_sold($id)
+	{
+		if(is_numeric($id))
+		{
+			$data = $this->pm->get_product_data($this->ss->user_id, $id);
+			if(count($data)===1 && is_numeric($this->input->post('c_price')))
+			{
+				$buyer_id = ($data[0]->seller_id==$this->ss->user_id)?$this->input->post('c_buyer_id'):$this->ss->user_id;
+				$MABer = ($data[0]->seller_id==$this->ss->user_id)?2:1;
+				$insert = [
+					'product_id'=>$id,
+					'buyer_id'=>$buyer_id,
+					'price'=>$this->input->post('c_price')
+				];
+				$this->pm->update_product_data(['product_id'=>$id], ['product_status'=>$MABer]);
+				$this->pm->set_transaction_data($insert);
+				redirect('product/'.$id);
+			}
+			else
+				redirect('error/404');
+		}
+		else
+			redirect('error/404');
+	}
+
+	public function answer_popup($pid)
+	{
+		$data = $this->pm->get_product_data($this->ss->user_id, $pid);		
+		// echo '<pre>';
+		// print_r($data);
+		// die($this->ss->user_id.'</br>'.$this->input->post('c_confirm')."timestamp error");
+		if(
+			count($data)===1 && 
+			($data[0]->seller_id==$this->ss->user_id && $data[0]->product_status==1)
+			|| ($data[0]->buyer_id==$this->ss->user_id && $data[0]->product_status==2)  
+			&& ($this->input->post('c_confirm')==="no" || $this->input->post('c_confirm')==="yes")
+		)
+		{
+			if($this->input->post('c_confirm')==="no")
+			{
+				$this->pm->update_product_data(['product_id'=>$pid], ['product_status'=>0]);
+				$this->pm->delete_transaction_data(['product_id'=>$pid]);
+			}
+			elseif($this->input->post('c_confirm')==="yes")
+			{
+				$this->pm->update_product_data(['product_id'=>$pid], ['product_status'=>3]);
+				$this->pm->update_transaction_with_current_date_data(['product_id'=>$pid]);
+			}
+			redirect('product/'.$pid);
+		}
+		else
+			redirect('error/404');
 	}
 }
