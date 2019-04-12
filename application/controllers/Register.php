@@ -35,6 +35,7 @@ class Register extends CI_Controller {
 				'name'=>$this->input->post('c_name'),
 				'contact_no'=>$this->input->post('c_contact_no'),
 				'email'=>$this->input->post('c_user_id').'@daiict.ac.in',
+				'photo'=>substr(strtolower($this->input->post('c_name')),0,1).'.svg',
 				'verification_secret'=>random_string('alnum', 32),
 				'is_verified'=> 0
 			];

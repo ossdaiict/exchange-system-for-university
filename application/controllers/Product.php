@@ -23,78 +23,12 @@ class Product extends CI_Controller {
 	{
 		$data = null;
 		$data = $this->pm->get_product_data($this->ss->user_id, $id);
-		// echo "<pre>";
-		// print_r($data);
-
-
-		// switch($d[0]->product_status)
-		// {
-		// 	case 0:
-		// 		if($d[0]->seller_id==$this->ss->user_id)
-		// 		{
-		// 			echo "i am seller";
-		// 		}
-		// 		else if($d[0]->wishlist_user_id==$this->ss->user_id)
-		// 		{
-		// 			echo "i can remove from wishlist";
-		// 		}
-		// 		else
-		// 		{
-		// 			echo "i am regular buyer/ i can add to wishlist";
-		// 		}
-		// 	break;
-
-		// 	case 1:
-		// 		if($d[0]->seller_id==$this->ss->user_id)
-		// 		{
-		// 			echo "i will answer popup";
-		// 		}
-		// 		else if($d[0]->buyer_id==$this->ss->user_id)
-		// 		{
-		// 			echo "i MABed it";
-		// 		}
-		// 		else
-		// 		{
-		// 			echo "i am regular buyer";
-		// 		}
-		// 		break;
-
-		// 	case 2:
-		// 		if($d[0]->seller_id==$this->ss->user_id)
-		// 		{
-		// 			echo "i will select a buyer for MAB";
-		// 		}
-		// 		else if($d[0]->buyer_id==$this->ss->user_id)
-		// 		{
-		// 			echo "i will answer popup";
-		// 		}
-		// 		else
-		// 		{
-		// 			echo "i am regular buyer";
-		// 		}
-		// 	break;
-
-		// 	case 3:
-		// 		if($d[0]->seller_id==$this->ss->user_id)
-		// 		{
-		// 			echo "i sold it";
-		// 		}
-		// 		else if($d[0]->buyer_id==$this->ss->user_id)
-		// 		{
-		// 			echo "i bought it";
-		// 		}				
-		// 	break;
-
-		// }
-
-
 		if(count($data)===1)
 		{
+			$data[0]->product_image=$this->pm->get_product_image_data($id);
 			$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$id]);
-			// echo "<pre>";
-			// print_r($data);
-			// die("</br>hello");
-			$this->parser->parse('product_detail', $data[0]);			
+			$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
+			$this->parser->parse('product_detail', $data[0]);
 		}
 		else
 			redirect('error/404');
@@ -183,4 +117,86 @@ class Product extends CI_Controller {
 		else
 			redirect('error/404');
 	}
+
+	public function add_review($id)
+	{
+		$this->fv->set_rules('c_rating', 'Rating', 'trim|required|integer|greater_than_equal_to[1]|less_than_equal_to[5]');
+		$this->fv->set_rules('c_review', 'Review', 'trim|max_length[500]');
+		if($this->fv->run()==FALSE)
+		{
+			$data = null;
+			$data = $this->pm->get_product_data($this->ss->user_id, $id);
+			if(count($data)===1)
+			{
+				$data[0]->product_image=$this->pm->get_product_image_data($id);
+				$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$id]);
+				$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
+				$this->parser->parse('product_detail', $data[0]);			
+			}
+			else
+				redirect('error/404');
+		}
+		else
+		{
+			$data = null;
+			$data = $this->pm->get_product_data($this->ss->user_id, $id);
+			if(count($data)===1)
+			{
+				$data = [
+					'buyer_id'=>$this->ss->user_id,
+					'product_id'=>$id,
+					'rating'=>$this->input->post('c_rating'),
+					'review'=>$this->input->post('c_review')
+				];
+				$this->pm->add_revier_data($data);
+				redirect('product/'.$id);
+			}
+			else
+			{
+				redirect('error/404');
+			}
+		}
+	}
+
+  public function report($pid)
+  {
+		$this->fv->set_rules('c_reason', 'Reason', 'trim|required|min_length[5]|max_length[500]');
+    if($this->fv->run()==false)
+		{
+			$data = $this->pm->get_product_data($this->ss->user_id, $pid);
+			if(count($data)===1)
+			{
+				$data[0]->product_image=$this->pm->get_product_image_data($pid);
+				$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$pid]);
+				$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
+				$this->parser->parse('product_detail', $data[0]);
+			}			
+			else
+				redirect('error/404');
+		}
+    else
+		{
+			$pdata = $this->pm->get_product_data($this->ss->user_id, $pid);
+			if(count($pdata)===1 && $this->ss->user_id!=$pdata[0]->seller_id)
+			{
+				$report_data = [
+					'reporter_id'=>$this->ss->user_id,
+					'product_id'=>$pid,
+					'reason'=>$this->input->post('c_reason')
+				];
+				$this->pm->set_report_data($report_data);
+				$report_count = $this->pm->get_report_data($pid);
+				if($report_count == 1 || $report_count > 10)
+				{
+					$product_data = ['report_status'=>($report_count==1?1:2)];
+					$where = ['product_id'=>$id];
+					$this->pm->update_product_data($where, $product_data);
+				}
+				redirect('product/'.$pid);
+			}
+			else
+				redirect('error/404');
+		}
+  }
+
 }

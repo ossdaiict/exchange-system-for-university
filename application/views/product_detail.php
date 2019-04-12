@@ -5,6 +5,15 @@
 	$this->load->view('common/menu'); 
 	//$this->load->view('common/banner');
 ?>
+<style>
+  .star-rating {
+    line-height:32px;
+    font-size:1.25em;
+  }
+
+  .star-rating .fa-star{color: #ff6600;}
+  .star-rating .fa-star-o{color: #ff6600;}
+</style>
 
   <!-- product category -->
   <section id="aa-product-details">
@@ -22,15 +31,19 @@
                         <div class="simpleLens-big-image-container"><a data-lens-image="<?=$path_prefix;?>img/product/{main_image}" class="simpleLens-lens-image"><img src="<?=$path_prefix;?>img/product/{main_image}" class="simpleLens-big-image"></a></div>
                       </div>
                       <div class="simpleLens-thumbnails-container">
-                          <a data-big-image="<?=$path_prefix;?>img/product/view-slider/medium/polo-shirt-1.png" data-lens-image="<?=$path_prefix;?>img/product/view-slider/large/polo-shirt-1.png" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="<?=$path_prefix;?>img/product/view-slider/thumbnail/polo-shirt-1.png">
-                          </a>                                    
-                          <a data-big-image="<?=$path_prefix;?>img/product/view-slider/medium/polo-shirt-3.png" data-lens-image="<?=$path_prefix;?>img/product/view-slider/large/polo-shirt-3.png" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="<?=$path_prefix;?>img/product/view-slider/thumbnail/polo-shirt-3.png">
-                          </a>
-                          <a data-big-image="<?=$path_prefix;?>img/product/view-slider/medium/polo-shirt-4.png" data-lens-image="<?=$path_prefix;?>img/product/view-slider/large/polo-shirt-4.png" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="<?=$path_prefix;?>img/product/view-slider/thumbnail/polo-shirt-4.png">
-                          </a>
+<?php
+                          foreach($product_image as $oi)
+                          {
+?>
+                            <a data-big-image="<?=$path_prefix;?>img/product/<?=$oi->other_image;?>" data-lens-image="<?=$path_prefix;?>img/product/<?=$oi->other_image;?>" class="simpleLens-thumbnail-wrapper" href="#">
+                              <img src="<?=$path_prefix;?>img/product/<?=$oi->other_image;?>" style="height:50px;width:50px;">
+                            </a>
+
+<?php
+                          }
+?>
+
+
                       </div>
                     </div>
                   </div>
@@ -39,13 +52,26 @@
                 <div class="col-md-7 col-sm-7 col-xs-12">
                   <div class="aa-product-view-content">
                     <h3>{name}</h3>
+                    <?php
+                      if($product_status!=3)
+                        if($report_status==1)
+                          echo '<p style="color:red;">Alert : Product is reported by someone, check before buying.</p>';
+                        elseif($report_status==2)
+                          echo '<p style="color:red;">Alert : Product blocked from display due to enough reports.</p>';
+                    ?>
+
                     <div class="aa-price-block">
-                      <span class="aa-product-view-price">{price}</span>
-                      <p class="aa-product-avilability">Avilability: <span>In stock</span></p>
+                      <p>Price : {price}</p>
                     </div>
-                    <p>{description}</p>
-										<p>
-<?php
+                    <p>Description : {description}</p>
+                    <div class="aa-prod-quantity">
+                      Category : <?=$category?>
+                    </div>
+                    <div class="aa-prod-view-bottom" style="border:none;">
+
+                    <?php
+					echo '<p>'.$return_window.' Day return policy.</p>';
+					echo ($is_negotiable==1?"<p>Price is Negotiable</p>":"");
 		if($product_status!=3) //unsold
 		{
 			if($this->ss->user_id==$seller_id) //seller
@@ -94,28 +120,34 @@
 <?php 
         }
 				else if($product_status==2)
-					echo '<p>waiting for buyers confirmation</p>';
+					echo '<p style="color:yellow">Status : Waiting for buyer\'s confirmation</p>';
 			}
 			else
 			{
 				if($this->ss->user_id!=$buyer_id && $report_status<2)
 				{
+					echo '<p style="color:green">Status : Available</p>';          
 ?>
-					<a class="aa-add-card-btn" href="<?=base_url('product/toggle_wishlist/'.$product_id.'/1');?>"><span class="<?=$wishlist_user_id!=''?'fa fa-heart':'fa fa-heart-o'?>"></span><?=$this->ss->user_id!=$wishlist_user_id?'Add to wishlist':'Remove from wishlist'?></a>
+
+					<a class="aa-add-to-cart-btn" href="<?=base_url('product/toggle_wishlist/'.$product_id.'/1');?>"><?=$this->ss->user_id!=$wishlist_user_id?'+ wishlist':'- wishlist'?></a>
 <?php
           if($wishlist_user_id==$this->ss->user_id)
           {
             ?>
-              <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>">
-                <input type="text" placeholder="final price">
-                <input type="submit" value="Mark">
+              <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>" class="form-group row" style="margin-top:15px;">
+                <div class="col-md-3">
+                <input class="form-control col-md-2 col-lg-2" type="text" placeholder="Final price">
+                </div>
+                <div class="col-md-4">
+                <input class="btn btn-danger" style="background-color:#ff6666;" type="submit" value="Mark as Bought">
+                </div>
               </form>
 
             <?php
           }
 				}
 				else if($product_status==1)
-					echo 'waiting for sellers confirmation';
+          echo '<p style="color:yellow">Status : Waiting for seller\'s confirmation</p>';
 				else if($product_status==2)
         {
 ?>
@@ -132,46 +164,36 @@
 		else
 		{
 			if($this->ss->user_id==$buyer_id)
-				echo 'bought, enable review';
+        echo '<p style="color:green">Status : Bought by you'.($rating===NULL?', please consider reviewing seller</p>':'</p>');
 			else if($this->ss->user_id==$seller_id)
-				echo 'sold';
+        echo '<p style="color:green">Status : Sold</p>';
 		}
 ?>
-										</p>
-										<h4>Size</h4>
-                    <div class="aa-prod-view-size">
-                      <a href="#">S</a>
-                      <a href="#">M</a>
-                      <a href="#">L</a>
-                      <a href="#">XL</a>
-                    </div>
-                    <h4>Color</h4>
-                    <div class="aa-color-tag">
-                      <a href="#" class="aa-color-green"></a>
-                      <a href="#" class="aa-color-yellow"></a>
-                      <a href="#" class="aa-color-pink"></a>                      
-                      <a href="#" class="aa-color-black"></a>
-                      <a href="#" class="aa-color-white"></a>                      
-                    </div>
-                    <div class="aa-prod-quantity">
-                      <form action="">
-                        <select id="" name="">
-                          <option selected="1" value="0">1</option>
-                          <option value="1">2</option>
-                          <option value="2">3</option>
-                          <option value="3">4</option>
-                          <option value="4">5</option>
-                          <option value="5">6</option>
-                        </select>
+                      <button style="background-color:white" type="button" class="aa-add-to-cart-btn" onclick="meee();">Report</button>
+                      <form action="<?=site_url('product/report/'.$product_id);?>" method="POST" id="report_form" style="display:none;" class="form-group row">
+                        <div class="col-md-12" style="margin-top:15px;">
+                          <div class="row">
+                            <div class="col-md-10">
+                            <textarea name="c_reason" class="form-control" id="" cols="30" rows="3"></textarea>
+                            </div>
+                            <div class="col-md-2">
+                          <input type="submit" value="Report" class="btn btn-danger pull-right" style="background-color:#ff6666">                            
+                            
+                            </div>
+                          </div>
+                        </div>
                       </form>
-                      <p class="aa-prod-category">
-                        Category: <a href="#">Polo T-Shirt</a>
-                      </p>
-                    </div>
-                    <div class="aa-prod-view-bottom">
-                      <a class="aa-add-to-cart-btn" href="#">Add To Cart</a>
-                      <a class="aa-add-to-cart-btn" href="#">Wishlist</a>
-                      <a class="aa-add-to-cart-btn" href="#">Compare</a>
+<script>
+  function meee()
+  {
+    //alert("helllllo");
+    var report_form = document.getElementById('report_form');
+    if(report_form.style.display=='block')
+      report_form.style.display='none';
+    else
+      report_form.style.display='block';
+  }
+</script>
                     </div>
                   </div>
                 </div>
@@ -186,81 +208,84 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div class="tab-pane fade in active" id="review">
-                 <div class="aa-product-review-area">
-                   <h4>2 Reviews for T-Shirt</h4> 
-                   <ul class="aa-review-nav">
-                     <li>
-                        <div class="media">
-                          <div class="media-left">
-                            <a href="#">
-                              <img class="media-object" src="<?=$path_prefix;?>img/product/testimonial-img-3.jpg" alt="girl image">
-                            </a>
-                          </div>
-                          <div class="media-body">
-                            <h4 class="media-heading"><strong>Marla Jobs</strong> - <span>March 26, 2016</span></h4>
-                            <div class="aa-product-rating">
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star-o"></span>
+                  <div class="aa-product-review-area">
+                    <h4><?=count($seller_review)?> Review(s) on seller</h4> 
+                    <ul class="aa-review-nav">
+<?php 
+                      foreach($seller_review as $sr)
+                      {
+?>
+                        <li>
+                          <div class="media">
+                            <div class="media-left">
+                              <a href="#">
+                                <img class="media-object" src="<?=$path_prefix;?>img/user/<?=$sr->photo?>" alt="user image">
+                              </a>
                             </div>
-                            <script>
-                              jQuery(function($){
-                                alert("hello");
-                              });
-                            </script>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="media">
-                          <div class="media-left">
-                            <a href="#">
-                              <img class="media-object" src="<?=$path_prefix;?>img/product/testimonial-img-3.jpg" alt="girl image">
-                            </a>
-                          </div>
-                          <div class="media-body">
-                            <h4 class="media-heading"><strong>Marla Jobs</strong> - <span>March 26, 2016</span></h4>
-                            <div class="aa-product-rating">
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star-o"></span>
+                            <div class="media-body">
+                              <h4 class="media-heading"><strong><?=$sr->name?></strong> - <span><?=nice_date($sr->date_added,'d-M-Y')?></span></h4>
+                              <div class="aa-product-rating">
+<?php
+                                for($i=0;$i<5;$i++)
+                                {
+                                  if($i<$sr->rating)
+                                  {
+?>
+                                    <span class="fa fa-star"></span>
+<?php
+                                  }
+                                  else
+                                  {
+?>
+                                    <span class="fa fa-star-o"></span>
+<?php
+                                  }
+                                }
+?>
+                              </div>
+                              <p><?=$sr->review?></p>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                           </div>
-                        </div>
-                      </li>
-                   </ul>
-                   <h4>Add a review</h4>
-                   <div class="aa-your-rating">
-                     <p>Your Rating</p>
-                     <a href="#"><span class="fa fa-star-o"></span></a>
-                     <a href="#"><span class="fa fa-star-o"></span></a>
-                     <a href="#"><span class="fa fa-star-o"></span></a>
-                     <a href="#"><span class="fa fa-star-o"></span></a>
-                     <a href="#"><span class="fa fa-star-o"></span></a>
-                   </div>
-                   <!-- review form -->
-                   <form action="" class="aa-review-form">
-                      <div class="form-group">
-                        <label for="message">Your Review</label>
-                        <textarea class="form-control" rows="3" id="message"></textarea>
-                      </div>
-                      <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Name">
-                      </div>  
-                      <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
-                      </div>
+                        </li>
 
-                      <button type="submit" class="btn btn-default aa-review-submit">Submit</button>
-                   </form>
+<?php
+                      }
+?>
+                      
+                    </ul>
+
+<?php
+                      if($product_status==3 && $this->ss->user_id==$buyer_id && $rating===NULL)
+                      {
+?>
+                        <h4>Add a review</h4>
+                        <form action="<?=site_url('product/add_review/'.$product_id);?>" method="POST" class="aa-review-form">
+                          <div class="aa-your-rating">
+                            <p>Your Rating</p>
+                              <div class="star-rating">
+                                <span class="fa fa-star-o" data-rating="1"></span>
+                                <span class="fa fa-star-o" data-rating="2"></span>
+                                <span class="fa fa-star-o" data-rating="3"></span>
+                                <span class="fa fa-star-o" data-rating="4"></span>
+                                <span class="fa fa-star-o" data-rating="5"></span>
+                                <input type="hidden" name="c_rating" class="rating-value" value="0">
+                              </div><?=form_error('c_rating');?>
+                            </br>
+                          </div>
+                          <div class="form-group">
+                            <label for="message">Your Review for seller</label>
+                            <textarea name="c_review" class="form-control" rows="3" id="message"></textarea>
+                            <?=form_error('c_review');?>
+                          </div>
+                          <button type="submit" class="btn btn-default aa-review-submit">Submit</button>
+                        </form>
+<?php
+                      }
+?>
+
+
+
+
                  </div>
                 </div>
                 <div class="tab-pane fade" id="description">
@@ -532,6 +557,31 @@
   </section>
   <!-- / Subscribe section -->
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+  var $star_rating = $('.star-rating .fa');
+
+  var SetRatingStar = function() {
+    return $star_rating.each(function() {
+      if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+        return $(this).removeClass('fa-star-o').addClass('fa-star');
+      } else {
+        return $(this).removeClass('fa-star').addClass('fa-star-o');
+      }
+    });
+  };
+
+  $star_rating.on('click', function() {
+    $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+    return SetRatingStar();
+  });
+
+  SetRatingStar();
+  $(document).ready(function() {
+
+  });
+</script>
 
 <?php
 	$this->load->view('common/footer');  
