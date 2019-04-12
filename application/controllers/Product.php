@@ -28,6 +28,10 @@ class Product extends CI_Controller {
 			$data[0]->product_image=$this->pm->get_product_image_data($id);
 			$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$id]);
 			$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
+			$data[0]->has_reported=$this->pm->get_product_report_data($this->ss->user_id, $id);
+			// echo '<pre>';
+			// print_r($data[0]);
+			// die("hello");
 			$this->parser->parse('product_detail', $data[0]);
 		}
 		else
@@ -69,14 +73,14 @@ class Product extends CI_Controller {
 		if(is_numeric($id))
 		{
 			$data = $this->pm->get_product_data($this->ss->user_id, $id);
-			if(count($data)===1 && is_numeric($this->input->post('c_price')))
+			if(count($data)===1 && is_numeric($this->input->post('c_final_price')))
 			{
 				$buyer_id = ($data[0]->seller_id==$this->ss->user_id)?$this->input->post('c_buyer_id'):$this->ss->user_id;
 				$MABer = ($data[0]->seller_id==$this->ss->user_id)?2:1;
 				$insert = [
 					'product_id'=>$id,
 					'buyer_id'=>$buyer_id,
-					'price'=>$this->input->post('c_price')
+					'final_price'=>$this->input->post('c_final_price')
 				];
 				$this->pm->update_product_data(['product_id'=>$id], ['product_status'=>$MABer]);
 				$this->pm->set_transaction_data($insert);
@@ -131,7 +135,8 @@ class Product extends CI_Controller {
 				$data[0]->product_image=$this->pm->get_product_image_data($id);
 				$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$id]);
 				$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
-				$this->parser->parse('product_detail', $data[0]);			
+				$data[0]->has_reported=$this->pm->get_product_report_data($this->ss->user_id, $id);
+				$this->parser->parse('product_detail', $data[0]);
 			}
 			else
 				redirect('error/404');
@@ -169,6 +174,7 @@ class Product extends CI_Controller {
 				$data[0]->product_image=$this->pm->get_product_image_data($pid);
 				$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$pid]);
 				$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
+				$data[0]->has_reported=$this->pm->get_product_report_data($this->ss->user_id, $pid);
 				$this->parser->parse('product_detail', $data[0]);
 			}			
 			else

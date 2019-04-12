@@ -79,7 +79,7 @@
 				if($product_status==0) //available
 				{
 ?>
-          <a href="<?=site_url('product/get_product_update/'.$product_id)?>">Update Product</a>
+          <a class="aa-add-to-cart-btn" href="<?=site_url('product/get_product_update/'.$product_id)?>">Update Product</a>
 <?php
 					if($wishlist_count>0)
           {
@@ -102,7 +102,7 @@
 <?php
               }
 ?>
-              <input name="c_price" type="text" placeholder="final price">
+              <input name="c_final_price" type="text" placeholder="final price">
               <input type="submit" value="Mark">
             </form>
 <?php
@@ -136,7 +136,7 @@
             ?>
               <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>" class="form-group row" style="margin-top:15px;">
                 <div class="col-md-3">
-                <input class="form-control col-md-2 col-lg-2" type="text" placeholder="Final price">
+                <input name="c_final_price" class="form-control col-md-2 col-lg-2" type="text" placeholder="Final price">
                 </div>
                 <div class="col-md-4">
                 <input class="btn btn-danger" style="background-color:#ff6666;" type="submit" value="Mark as Bought">
@@ -169,6 +169,10 @@
         echo '<p style="color:green">Status : Sold</p>';
 		}
 ?>
+<?php
+if($has_reported==0 && $this->ss->user_id!=$seller_id)
+{
+?>
                       <button style="background-color:white" type="button" class="aa-add-to-cart-btn" onclick="meee();">Report</button>
                       <form action="<?=site_url('product/report/'.$product_id);?>" method="POST" id="report_form" style="display:none;" class="form-group row">
                         <div class="col-md-12" style="margin-top:15px;">
@@ -177,12 +181,14 @@
                             <textarea name="c_reason" class="form-control" id="" cols="30" rows="3"></textarea>
                             </div>
                             <div class="col-md-2">
-                          <input type="submit" value="Report" class="btn btn-danger pull-right" style="background-color:#ff6666">                            
-                            
+                              <input type="submit" value="Report" class="btn btn-danger pull-right" style="background-color:#ff6666">                          
                             </div>
                           </div>
                         </div>
                       </form>
+<?php
+}
+?>
 <script>
   function meee()
   {

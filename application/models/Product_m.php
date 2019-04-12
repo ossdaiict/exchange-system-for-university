@@ -34,7 +34,7 @@ class Product_m extends CI_Model
   public function get_product_data($logged_in_user_id, $id=false)
   {
     $data = $this->db
-      ->select('p.*, w.wishlist_user_id, t.buyer_id, t.price, t.date_sold, ur.rating')
+      ->select('p.*, w.wishlist_user_id, t.buyer_id, t.final_price, t.date_sold, ur.rating')
       ->from('product p')
       ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id={$logged_in_user_id}", 'left')
       ->join('transaction t', 'p.product_id=t.product_id', 'left')
@@ -154,5 +154,13 @@ class Product_m extends CI_Model
       ->get('product_report')
       ->result()[0]
       ->count;
-    }
+  }
+  public function get_product_report_data($logged_in_user_id, $pid)
+  {
+    return $this->db
+      ->select('count(product_id) as count')
+      ->where(['product_id'=>$pid, 'reporter_id'=>$logged_in_user_id])
+      ->get('product_report')
+      ->result()[0]->count;
+  }
 }
