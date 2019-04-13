@@ -72,12 +72,12 @@ class Product2 extends CI_Controller
                 //if insert is successful then upload secondary images
                 if($stat == true)
                 {
-                    $uploadImgData = NULL;
                     $id = $this->db->insert_id();
+                    $uploadImgData = NULL;
                     $img = count($_FILES['c_sec_image']['name']);
 
                     //check whether secondary image field contains any value or not
-                    if($img > 0)
+                    if($img > 0 && $_FILES['c_sec_image']['name'][0] != "")
                     {
                         $rr = NULL;
                         for($i = 0; $i < $img; $i++)
@@ -88,12 +88,13 @@ class Product2 extends CI_Controller
                             $_FILES['file']['error']      = $_FILES['c_sec_image']['error'][$i];
                             $_FILES['file']['size']       = $_FILES['c_sec_image']['size'][$i];
 
-                            $this->load->library('upload', $config);
+                            //$this->load->library('upload', $config);
 
                             // Upload file to server
                             if($this->upload->do_upload('file')){
                                 // Uploaded file data
                                 $imageData = $this->upload->data();
+                                $uploadImgData[$i]['product_id'] = $id;
                                 $uploadImgData[$i]['other_image'] = $imageData['file_name'];
                                 if($this->upload->display_errors() == "")
                                     $mag['error_msg'] = $rr++." files unable to upload due to image size greater than 2 MB.";
@@ -109,7 +110,6 @@ class Product2 extends CI_Controller
                             $this->parser->parse('add_product',$mag);
                         }
                     }
-                    
                     //if secondary image doesn't have any value then redirect to page
                     else
                     {
