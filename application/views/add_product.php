@@ -46,6 +46,24 @@
                     <?=form_error('c_category');?>
                     <br>
 
+                    <label for="">Negotiable<span>*</span></label><br>
+                      <input name="c_is_negotiable" type="radio" value="0" class="radio-inline" <?php if(set_value('c_is_negotiable') == 0) { echo "selected"; } ?> required> Yes 
+                      <input name="c_is_negotiable" type="radio" value="1" class="radio-inline" <?php if(set_value('c_is_negotiable') == 1) { echo "selected"; } ?> required> No
+                      <br>
+                      <?=form_error('c_is_negotiable');?>
+                      <br>
+
+                    <label for="">Return Window<span>*</span></label><br>
+                      <select name="c_return_window" class="form-control" id="">
+                        <option value="" disabled selected>Select Return Type</option>
+                        <option value="0">No Return</option>
+                        <?php for($i = 1; $i <= 7; $i++) { ?>
+                        <option value="<?=$i?>"><?=$i?> Days</option>
+                        <?php } ?>
+                      </select>
+                      <?=form_error('c_return_window');?>
+                      <br>
+                    
                     <label for="">Image<span>*</span></label><input type="file" name="c_main_image" accept="image/*" class="form-control" style="width:100%" required>
                       <?=form_error('c_main_image');?>
                       <?php if(isset($error)) { echo $error; }?>

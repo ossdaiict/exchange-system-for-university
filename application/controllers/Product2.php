@@ -18,10 +18,15 @@ class Product2 extends CI_Controller
     }
     public function add_product()
     {
+        $this->load->helper('date');
+        $expiry_date = now() + (60*60*24*90);
+        $dt = date("Y-m-d H:m:s", $expiry_date);
         $this->fv->set_rules('c_name', 'Product Name', 'trim|required');
         $this->fv->set_rules('c_description', 'Description', 'trim|required');
         $this->fv->set_rules('c_price', 'Price', 'trim|required|numeric');
         $this->fv->set_rules('c_category', 'Category', 'trim|required|callback_cat_check');
+        $this->fv->set_rules('c_is_negotiable', 'Negotiable', 'trim|required|less_than[2]|greater_than[-1]');
+        $this->fv->set_rules('c_return_window', 'Return Window', 'trim|required|less_than[8]|greater_than[-1]');
         //$this->fv->set_rules('c_image', 'Image', 'required');
         if($this->fv->run() == true)
         {
@@ -57,7 +62,10 @@ class Product2 extends CI_Controller
                     'name' => $this->input->post('c_name'),
                     'description' => $this->input->post('c_description'),
                     'price' => $this->input->post('c_price'),
-                    'category' => $this->input->post('c_category')
+                    'category' => $this->input->post('c_category'),
+                    'return_window' => $this->input->post('c_return_window'),
+                    'is_negotiable' => $this->input->post('c_is_negotiable'),
+                    'expiry_date' => $dt
                 ];
                 $stat = $this->p2->add_product($ins);
                 $mag['msg'] = "Product added successfully";
