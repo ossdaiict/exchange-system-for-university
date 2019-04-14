@@ -5,6 +5,10 @@
 	$this->load->view('common/menu'); 
 	//$this->load->view('common/banner');
 ?>
+ <?php
+ if(isset($cat))
+ {
+ ?>
  <!-- Cart view section -->
  <section id="aa-myaccount">
    <div class="container">
@@ -34,8 +38,8 @@
                     </div>
                     <div class="col-md-6">
                       <label for="">Is Price Negotiable?<span>*</span></label><br>
-                            <input name="c_is_negotiable" type="radio" value="0" class="radio-inline" <?php if(set_value('c_is_negotiable') == 0) { echo "selected"; } ?> required> Yes 
-                            <input name="c_is_negotiable" type="radio" value="1" class="radio-inline" <?php if(set_value('c_is_negotiable') == 1) { echo "selected"; } ?> required> No
+                            <input name="c_is_negotiable" type="radio" value="0" class="radio-inline" <?php if(set_value('c_is_negotiable') == 0) { echo "checked"; } ?> required> Yes 
+                            <input name="c_is_negotiable" type="radio" value="1" class="radio-inline" <?php if(set_value('c_is_negotiable') == 1) { echo "checked"; } ?> required> No
                             <br>
                             <?=form_error('c_is_negotiable');?>
                             <br>
@@ -96,6 +100,55 @@
      </div>
    </div>
  </section>
+<?php
+ }
+ else {
+?>
+<section id="aa-myaccount">
+   <div class="container">
+     <div class="row">
+       <div class="col-md-12">
+        <div class="aa-myaccount-area">         
+            <div class="row">
+              <div class="col-md-12">
+                <div class="aa-myaccount-login">
+                  <h4>Report Status</h4>
+                  <table class="table table-responsive table-hover table-striped">
+                    <tr>
+                      <th>Product Name</th>
+                      <th>Category</th>
+                      <th>Price</th>
+                      <th>Description</th>
+                      <th width="10%">Operation</th>
+                    </tr>
+                    <?php
+                    for($i = 0; $i < count($past); $i++)
+                    {
+                    ?>
+                    <tr>
+                      <td><?=$past[$i]->name?></td>
+                      <td><?=$past[$i]->category?></td>
+                      <td><?=$past[$i]->price?></td>
+                      <td><?=$past[$i]->description?></td>
+                      <td style="white-space: nowrap;">
+                        <a href="<?=base_url('Product2/availablity/'.$past[$i]->product_id)?>" class="btn btn-info">Available</a> &nbsp;
+                        <a href="<?=base_url("Product/product_detail/".$past[$i]->product_id)?>" class="btn btn-success">Give Detail status</a>
+                      </td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+                  </table>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</section>
+<?php
+ }
+?>
  <!-- / Cart view section -->
  <?php
 	$this->load->view('common/footer');  
