@@ -37,8 +37,8 @@
         $config['upload_path'] = './asset/user/img/user/';
         $config['allowed_types'] = 'gif|jpg|jpeg|png';
         $config['max_size'] = '2048'; 
-        $config['max_width'] = '2048';
-        $config['max_height'] = '2048';
+        $config['max_width'] = '0';
+        $config['max_height'] = '0';
         $config['encrypt_name'] = TRUE;
         $config['detect_mime'] = TRUE;
 
@@ -47,7 +47,7 @@
         if ( $img == FALSE)
         {
                 $error['err'] = $this->upload->display_errors();
-                die($this->upload->display_errors());
+                //die($this->upload->display_errors());
                 $this->parser->parse('profile', $error);
         }
         else

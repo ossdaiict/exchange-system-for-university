@@ -11,10 +11,10 @@
             <div class="aa-header-top-area">
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
-                  <li><a href="account.html">My Account</a></li>
+                  <li><a href="<?=site_url('profile/');?>">My Account</a></li>
                   <li class="hidden-xs"><a href="<?=site_url('product/wishlist');?>">Wishlist</a></li>
                   <li class="hidden-xs"><a href="<?=site_url('product/bought');?>">Bought Items</a></li>
-                  <li class="hidden-xs"><a href="<?=site_url('product/sold');?>">Sold Items</a></li>
+                  <li class="hidden-xs"><a href="<?=site_url('product/seller');?>">Seller Items</a></li>
                   <li>
 <?php
                       if($this->ss->email)

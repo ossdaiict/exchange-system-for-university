@@ -10,7 +10,7 @@ class Product_m extends CI_Model
       ->where('p.report_status !=', 2)
       ->where('p.product_status !=', 3)
       //what about sold product
-      ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+      ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC')
       ->get()
       ->result();
 
@@ -24,7 +24,7 @@ class Product_m extends CI_Model
     //   ->join('wishlist w2', 'p.product_id=w2.product_id', 'left')
     //   ->where(['p.product_status'=>$status]) //bring all product !!!!
     //   ->group_by('w2.product_id')
-    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC')
     //   ->get()
     //   ->result();
 
@@ -42,7 +42,7 @@ class Product_m extends CI_Model
       ->where('p.product_status !=', 3)
       ->where('p.category', $category)
       //what about sold product
-      ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+      ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC')
       ->get()
       ->result();
 
@@ -56,7 +56,7 @@ class Product_m extends CI_Model
     //   ->join('wishlist w2', 'p.product_id=w2.product_id', 'left')
     //   ->where(['p.product_status'=>$status]) //bring all product !!!!
     //   ->group_by('w2.product_id')
-    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC')
     //   ->get()
     //   ->result();
 
@@ -218,7 +218,7 @@ class Product_m extends CI_Model
       ->like('p.name', $match)
       ->or_like('p.description', $match)
       //what about sold product
-      ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+      ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC')
       ->get()
       ->result();
 
@@ -232,7 +232,7 @@ class Product_m extends CI_Model
     //   ->join('wishlist w2', 'p.product_id=w2.product_id', 'left')
     //   ->where(['p.product_status'=>$status]) //bring all product !!!!
     //   ->group_by('w2.product_id')
-    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC')
     //   ->get()
     //   ->result();
 
@@ -263,7 +263,7 @@ class Product_m extends CI_Model
     //   ->join('wishlist w2', 'p.product_id=w2.product_id', 'left')
     //   ->where(['p.product_status'=>$status]) //bring all product !!!!
     //   ->group_by('w2.product_id')
-    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC')
     //   ->get()
     //   ->result();
 
