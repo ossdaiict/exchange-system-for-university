@@ -5,6 +5,16 @@
 	$this->load->view('common/menu'); 
 	//$this->load->view('common/banner');
 ?>
+<?php
+  if(isset($msg))
+  {
+?>
+    <script>
+      alert("<?=$msg?>");
+    </script>
+<?php
+  }
+?>
  <!-- Cart view section -->
  <section id="aa-myaccount">
    <div class="container">
@@ -23,13 +33,12 @@
                     <input name="r_password" type="password" placeholder="Password" required>
                     <?=form_error('r_password');?>
                     <?=isset($error)?$error:''?>
-                    <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
                     </br>
-                    <button type="submit" class="aa-browse-btn">Login</button>
-                    <button type="submit" class="aa-browse-btn pull-right">Reset Password</button>
+                    <button type="submit" formaction="<?=site_url('login/do_login')?>" class="aa-browse-btn">Login</button>
+                    <button type="submit" formaction="<?=site_url('login/lost_password')?>" class="aa-browse-btn pull-right">Reset Password</button>
                     </br>
                     </br>
-                    <p class="aa-lost-password"><a href="<?=site_url('register/')?>">Don't have an account ?</a></p>
+                    <p class="aa-lost-password">Don't have an account?<a href="<?=site_url('register/')?>"> Register now!</a></p>
                   </form>
                 </div>
               </div>

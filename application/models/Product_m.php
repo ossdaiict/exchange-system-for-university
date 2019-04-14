@@ -170,6 +170,7 @@ class Product_m extends CI_Model
     ->result();
     //die($this->db->last_query());
   }
+
   public function add_revier_data($data)
   {
     $this->db->insert('user_review', $data);
@@ -179,6 +180,7 @@ class Product_m extends CI_Model
   {
     $this->db->insert('product_report', $data);
   }
+
   public function get_report_data($id)
   {
     return $this->db
@@ -188,6 +190,7 @@ class Product_m extends CI_Model
       ->result()[0]
       ->count;
   }
+
   public function get_product_report_data($logged_in_user_id, $pid)
   {
     return $this->db
@@ -203,6 +206,7 @@ class Product_m extends CI_Model
       ->get('category')
       ->result();
   }
+
   public function get_product_search_data($logged_in_user_id, $status, $match)
   {
     $data = $this->db
@@ -266,4 +270,5 @@ class Product_m extends CI_Model
 
     return $data;
   }
+  
 }
