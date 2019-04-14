@@ -70,8 +70,9 @@
                     <div class="aa-prod-view-bottom" style="border:none;">
 
                     <?php
-					echo '<p>'.$return_window.' Day return policy.</p>';
+					echo '<p>'.$return_window.' Day return window.</p>';
 					echo ($is_negotiable==1?"<p>Price is Negotiable</p>":"");
+					echo ($wishlist_count>0?"<p>".$wishlist_count." student(s) wishlisted this item</p>":"");
 		if($product_status!=3) //unsold
 		{
 			if($this->ss->user_id==$seller_id) //seller

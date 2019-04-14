@@ -18,14 +18,18 @@
           <div class="aa-product-catg-content">
             <div class="aa-product-catg-head">
               <div class="aa-product-catg-head-left">
-                <form action="" class="aa-sort-form">
+                <form action="<?=site_url('product/sort/')?>" method="POST" class="aa-sort-form">
                   <label for="">Sort by</label>
-                  <select name="">
+                  <select name="r_sort">
                     <option value="1" selected="Default">Default</option>
-                    <option value="2">Name</option>
-                    <option value="3">Price</option>
-                    <option value="4">Date</option>
+                    <option value="2">Name a -> z</option>
+                    <option value="3">Name z -> a</option>
+                    <option value="4">Price low -> high</option>
+                    <option value="5">Price high -> low</option>
+                    <option value="6">Date new -> old</option>
+                    <option value="7">Date old -> new</option>
                   </select>
+                  <input type="submit" value="ok">
                 </form>
                 <form action="" class="aa-show-form">
                   <label for="">Show</label>
@@ -36,10 +40,10 @@
                   </select>
                 </form>
               </div>
-              <div class="aa-product-catg-head-right">
+              <!-- <div class="aa-product-catg-head-right">
                 <a id="grid-catg" href="#"><span class="fa fa-th"></span></a>
                 <a id="list-catg" href="#"><span class="fa fa-list"></span></a>
-              </div>
+              </div> -->
             </div>
             <div class="aa-product-catg-body">
               <ul class="aa-product-catg list">
@@ -53,7 +57,7 @@
                       if($p->seller_id!=$this->ss->user_id)
                       {
 ?>
-                        <a class="aa-add-card-btn" href="<?=base_url('product/toggle_wishlist/'.$p->product_id);?>"><span class="<?=$p->wishlist_user_id!=''?'fa fa-heart':'fa fa-heart-o'?>"></span><?=$p->wishlist_user_id!=''?'Remove from wishlist':'Add to wishlist'?></a>
+                        <a class="aa-add-card-btn" href="<?=base_url('product/toggle_wishlist/'.$p->product_id);?>"><?=$p->wishlist_user_id!=''?'- wishlist':'+ wishlist'?></a>
 <?php
                       }
                       else
@@ -63,14 +67,15 @@
 
 <?php                 }
 ?>
+                    <a href="<?=site_url('product/'.$p->product_id)?>" class="btn" style="background-color:white">View Details</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="<?=site_url('product/'.$p->product_id)?>"><?=$p->name?></a></h4>
-                      <span class="aa-product-price"><?=$p->price?></span><span class="aa-product-price"><del>$65.50</del></span>
+                      <span class="aa-product-price">Price : ₹ <?=$p->price?></span>
                       <p class="aa-product-descrip">Category : <?=$p->category?></p>
-                      <p class="aa-product-descrip"><?=$p->description?></p>
+                      <p class="aa-product-descrip">Description : <?=$p->description?></p>
                     </figcaption>
                   </figure>                         
-                  <div class="aa-product-hvr-content">
+                  <!-- <div class="aa-product-hvr-content">
 <?php
                       if($p->seller_id!=$this->ss->user_id)
                       {
@@ -83,8 +88,9 @@
                         <a href="<?=base_url('product/get_product_update/'.$p->product_id);?>" data-toggle="tooltip" data-placement="top" title="Update info."><span class="fa fa-edit"></span></a>                      
 <?php                 }
 ?>
+
                         <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
-                  </div>
+                  </div> -->
                   <!-- product badge -->
                   <span class="aa-badge aa-sale" href="#">
 <?php
@@ -102,7 +108,7 @@ $status="";
     break;
     case 1:
     case 2:
-      $status.="Available";
+      $status.="In-Transact";
     break;
     case 3:
       $status.="Sold";
@@ -116,86 +122,6 @@ $status="";
               <?php } ?>
               </ul>
               <!-- quick view modal -->
-              <div class="modal fade" id="quick-view-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">                      
-                    <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <div class="row">
-                        <!-- Modal view slider -->
-                        <div class="col-md-6 col-sm-6 col-xs-12">                              
-                          <div class="aa-product-view-slider">                                
-                            <div class="simpleLens-gallery-container" id="demo-1">
-                              <div class="simpleLens-container">
-                                  <div class="simpleLens-big-image-container">
-                                      <a class="simpleLens-lens-image" data-lens-image="<?=$path_prefix?>img/view-slider/large/polo-shirt-1.png">
-                                          <img src="<?=$path_prefix?>img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="simpleLens-thumbnails-container">
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="<?=$path_prefix?>img/view-slider/large/polo-shirt-1.png"
-                                     data-big-image="<?=$path_prefix?>img/view-slider/medium/polo-shirt-1.png">
-                                      <img src="<?=$path_prefix?>img/view-slider/thumbnail/polo-shirt-1.png">
-                                  </a>                                    
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="<?=$path_prefix?>img/view-slider/large/polo-shirt-3.png"
-                                     data-big-image="<?=$path_prefix?>img/view-slider/medium/polo-shirt-3.png">
-                                      <img src="<?=$path_prefix?>img/view-slider/thumbnail/polo-shirt-3.png">
-                                  </a>
-
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="<?=$path_prefix?>img/view-slider/large/polo-shirt-4.png"
-                                     data-big-image="<?=$path_prefix?>img/view-slider/medium/polo-shirt-4.png">
-                                      <img src="<?=$path_prefix?>img/view-slider/thumbnail/polo-shirt-4.png">
-                                  </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Modal view content -->
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <div class="aa-product-view-content">
-                            <h3>T-Shirt</h3>
-                            <div class="aa-price-block">
-                              <span class="aa-product-view-price">$34.99</span>
-                              <p class="aa-product-avilability">Avilability: <span>In stock</span></p>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis animi, veritatis quae repudiandae quod nulla porro quidem, itaque quis quaerat!</p>
-                            <h4>Size</h4>
-                            <div class="aa-prod-view-size">
-                              <a href="#">S</a>
-                              <a href="#">M</a>
-                              <a href="#">L</a>
-                              <a href="#">XL</a>
-                            </div>
-                            <div class="aa-prod-quantity">
-                              <form action="">
-                                <select name="" id="">
-                                  <option value="0" selected="1">1</option>
-                                  <option value="1">2</option>
-                                  <option value="2">3</option>
-                                  <option value="3">4</option>
-                                  <option value="4">5</option>
-                                  <option value="5">6</option>
-                                </select>
-                              </form>
-                              <p class="aa-prod-category">
-                                Category: <a href="#">Polo T-Shirt</a>
-                              </p>
-                            </div>
-                            <div class="aa-prod-view-bottom">
-                              <a href="#" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                              <a href="#" class="aa-add-to-cart-btn">View Details</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>                        
-                  </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-              </div>
               <!-- / quick view modal -->
             </div>
 
@@ -230,15 +156,14 @@ $status="";
             <div class="aa-sidebar-widget">
               <h3>Category</h3>
               <ul class="aa-catg-nav">
-                <li><a href="#">Men</a></li>
-                <li><a href="">Women</a></li>
-                <li><a href="">Kids</a></li>
-                <li><a href="">Electornics</a></li>
-                <li><a href="">Sports</a></li>
+                {categories}
+                  <li><a href="<?=site_url('product/category/')?>{category}">{category}</a></li>
+                {/categories}
+
               </ul>
             </div>
             <!-- single sidebar -->
-            <div class="aa-sidebar-widget">
+            <!-- <div class="aa-sidebar-widget">
               <h3>Tags</h3>
               <div class="tag-cloud">
                 <a href="#">Fashion</a>
@@ -249,11 +174,10 @@ $status="";
                 <a href="#">Head Phone</a>
                 <a href="#">Pen Drive</a>
               </div>
-            </div>
+            </div> -->
             <!-- single sidebar -->
-            <div class="aa-sidebar-widget">
+            <!-- <div class="aa-sidebar-widget">
               <h3>Shop By Price</h3>              
-              <!-- price range -->
               <div class="aa-sidebar-price-range">
                <form action="">
                   <div id="skipstep" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
@@ -264,9 +188,9 @@ $status="";
                </form>
               </div>              
 
-            </div>
+            </div> -->
             <!-- single sidebar -->
-            <div class="aa-sidebar-widget">
+            <!-- <div class="aa-sidebar-widget">
               <h3>Shop By Color</h3>
               <div class="aa-color-tag">
                 <a class="aa-color-green" href="#"></a>
@@ -282,9 +206,9 @@ $status="";
                 <a class="aa-color-olive" href="#"></a>
                 <a class="aa-color-orchid" href="#"></a>
               </div>                            
-            </div>
+            </div> -->
             <!-- single sidebar -->
-            <div class="aa-sidebar-widget">
+            <!-- <div class="aa-sidebar-widget">
               <h3>Recently Views</h3>
               <div class="aa-recently-views">
                 <ul>
@@ -311,7 +235,7 @@ $status="";
                   </li>                                      
                 </ul>
               </div>                            
-            </div>
+            </div> -->
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">
               <h3>Top Rated Products</h3>

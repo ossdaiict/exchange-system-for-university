@@ -8,6 +8,39 @@ class Product_m extends CI_Model
       ->from('product p')
       ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id={$logged_in_user_id}", 'left')
       ->where('p.report_status !=', 2)
+      ->where('p.product_status !=', 3)
+      //what about sold product
+      ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+      ->get()
+      ->result();
+
+
+      //add paging
+      
+    // $data = $this->db
+    //   ->select('p.*, w.wishlist_user_id, count(w2.product_id) AS wishlist_count')
+    //   ->from('product p')
+    //   ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id={$logged_in_user_id}", 'left')
+    //   ->join('wishlist w2', 'p.product_id=w2.product_id', 'left')
+    //   ->where(['p.product_status'=>$status]) //bring all product !!!!
+    //   ->group_by('w2.product_id')
+    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+    //   ->get()
+    //   ->result();
+
+
+    return $data;
+  }
+
+  public function get_all_product_with_x_category_data($logged_in_user_id, $status, $category)
+  {
+    $data = $this->db
+      ->select('p.*, w.wishlist_user_id')
+      ->from('product p')
+      ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id={$logged_in_user_id}", 'left')
+      ->where('p.report_status !=', 2)
+      ->where('p.product_status !=', 3)
+      ->where('p.category', $category)
       //what about sold product
       ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
       ->get()
@@ -162,5 +195,75 @@ class Product_m extends CI_Model
       ->where(['product_id'=>$pid, 'reporter_id'=>$logged_in_user_id])
       ->get('product_report')
       ->result()[0]->count;
+  }
+
+  public function get_all_category_data()
+  {
+    return $this->db
+      ->get('category')
+      ->result();
+  }
+  public function get_product_search_data($logged_in_user_id, $status, $match)
+  {
+    $data = $this->db
+      ->select('p.*, w.wishlist_user_id')
+      ->from('product p')
+      ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id={$logged_in_user_id}", 'left')
+      ->where('p.report_status !=', 2)
+      ->where('p.product_status !=', 3)
+      ->like('p.name', $match)
+      ->or_like('p.description', $match)
+      //what about sold product
+      ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+      ->get()
+      ->result();
+
+
+      //add paging
+      
+    // $data = $this->db
+    //   ->select('p.*, w.wishlist_user_id, count(w2.product_id) AS wishlist_count')
+    //   ->from('product p')
+    //   ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id={$logged_in_user_id}", 'left')
+    //   ->join('wishlist w2', 'p.product_id=w2.product_id', 'left')
+    //   ->where(['p.product_status'=>$status]) //bring all product !!!!
+    //   ->group_by('w2.product_id')
+    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+    //   ->get()
+    //   ->result();
+
+
+    return $data;
+  }
+
+  public function get_product_sort_data($logged_in_user_id, $status, $sort, $direction)
+  {
+    $data = $this->db
+      ->select('p.*, w.wishlist_user_id')
+      ->from('product p')
+      ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id={$logged_in_user_id}", 'left')
+      ->where('p.report_status !=', 2)
+      ->where('p.product_status !=', 3)
+      //what about sold product
+      ->order_by('p.'.$sort, $direction)
+      ->get()
+      ->result();
+
+
+      //add paging
+      
+    // $data = $this->db
+    //   ->select('p.*, w.wishlist_user_id, count(w2.product_id) AS wishlist_count')
+    //   ->from('product p')
+    //   ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id={$logged_in_user_id}", 'left')
+    //   ->join('wishlist w2', 'p.product_id=w2.product_id', 'left')
+    //   ->where(['p.product_status'=>$status]) //bring all product !!!!
+    //   ->group_by('w2.product_id')
+    //   ->order_by('p.report_status, p.product_status','ASC' ,'p.date_added', 'DESC',)
+    //   ->get()
+    //   ->result();
+
+
+    return $data;
   }
 }

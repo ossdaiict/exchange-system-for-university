@@ -1,0 +1,25 @@
+lost password
+filter
+	wishlist
+	buy list
+	sell list
+merge product add/update
+merge profile view/update
+
+
+
+add to wishlist
+
+remove from wishlist
+mark as bought
+
+waiting for confirmation
+
+sold/bought | review
+
+status : Available(green)
+status : In-Transact(orange)
+status : Reported(red)
+status : sold(green)
+status : bought(green)
+status : Waiting for confirmation(yellow)

@@ -12,6 +12,7 @@ class Product extends CI_Controller {
 	public function index()
 	{
 		$data['products'] = $this->pm->get_all_product_data($this->ss->user_id, 0);
+		$data['categories'] = $this->pm->get_all_category_data();
 		// echo "<pre>";
 		// print_r($data['products']);
 		// echo "</pre>";
@@ -203,6 +204,74 @@ class Product extends CI_Controller {
 			else
 				redirect('error/404');
 		}
-  }
+	}
+	
+	public function category($cat)
+	{
+		$data['products'] = $this->pm->get_all_product_with_x_category_data($this->ss->user_id,0,$cat);
+		$data['categories'] = $this->pm->get_all_category_data();
+		// echo "<pre>";
+		// print_r($data['products']);
+		// echo "</pre>";
+		//die("hello");		
+		if(count($data)>0)
+			$this->parser->parse('product', $data);
+		else
+			redirect('error/404');
+	}
+	public function search()
+	{
+		$this->fv->set_rules('r_search', 'Search', 'trim|required|alpha_numeric_spaces|max_length[50]');
+		if($this->fv->run()==false)
+			redirect('error/404');
+		else
+		{
+			$data['products'] = $this->pm->get_product_search_data($this->ss->user_id, 0, $this->input->post('r_search'));
+			$data['categories'] = $this->pm->get_all_category_data();
+			$this->parser->parse('product', $data);
+		}
+	}
+	public function sort()
+	{
+		$this->fv->set_rules('r_sort', 'Sort', 'trim|required|integer|greater_than[1]|less_than[8]');
+		if($this->fv->run()==false)
+		{
+			$data['products'] = $this->pm->get_all_product_data($this->ss->user_id, 0);
+			$data['categories'] = $this->pm->get_all_category_data();
+			$this->parser->parse('product', $data);
+		}
+		else
+		{
+			switch($this->input->post('r_sort'))
+			{
+				case 2:	$sort='name';	$direction='ASC';	break;
+				case 3:	$sort='name';	$direction='DESC';	break;
+				case 4:	$sort='price';	$direction='ASC';	break;
+				case 5:	$sort='price';	$direction='DESC';	break;
+				case 6:	$sort='date_added';	$direction='DESC';	break;
+				case 7:	$sort='date_added';	$direction='ASC';	break;
+			}
+			$data['products'] = $this->pm->get_product_sort_data($this->ss->user_id, 0, $sort, $direction);
+			$data['categories'] = $this->pm->get_all_category_data();
+			$this->parser->parse('product', $data);
+		}		
+	}
+	// public function filter($type)
+	// {
+	// 	switch($type)
+	// 	{
+	// 		case "wishlist":
 
+	// 		break
+	// 		case "sold":
+			
+	// 		break
+	// 		case "bought":
+			
+	// 		break
+	// 		default:
+	// 			redirect('error/404');
+	// 		break
+	// 	}
+	// }
 }
