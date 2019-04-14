@@ -1,7 +1,8 @@
 <?php
-//  echo "<pre>";
-//  print_r($products);
-//  die("hello");
+ echo "<pre>";
+ print_r($page_info);
+  echo "</pre>";
+ //  die("hello");
 ?>
 <?php
 	$path_prefix=base_url('asset/user/');
@@ -18,25 +19,25 @@
           <div class="aa-product-catg-content">
             <div class="aa-product-catg-head">
               <div class="aa-product-catg-head-left">
-                <form action="<?=site_url('product/sort/')?>" method="POST" class="aa-sort-form">
+                <form action="<?=site_url('product/sort_show/')?>" method="POST" class="aa-sort-form">
+                  <input type="hidden" name="r_search" value="<?=$page_info['search']?>">
                   <label for="">Sort by</label>
                   <select name="r_sort">
-                    <option value="1" selected="Default">Default</option>
-                    <option value="2">Name a -> z</option>
-                    <option value="3">Name z -> a</option>
-                    <option value="4">Price low -> high</option>
-                    <option value="5">Price high -> low</option>
-                    <option value="6">Date new -> old</option>
-                    <option value="7">Date old -> new</option>
+                    <option value="0" <?=($page_info['sort']==0?"selected":"")?> >Default</option>
+                    <option value="1" <?=($page_info['sort']==1?"selected":"")?> >Name a -> z</option>
+                    <option value="2" <?=($page_info['sort']==2?"selected":"")?> >Name z -> a</option>
+                    <option value="3" <?=($page_info['sort']==3?"selected":"")?> >Price low -> high</option>
+                    <option value="4" <?=($page_info['sort']==4?"selected":"")?> >Price high -> low</option>
+                    <option value="5" <?=($page_info['sort']==5?"selected":"")?> >Date new -> old</option>
+                    <option value="6" <?=($page_info['sort']==6?"selected":"")?> >Date old -> new</option>
                   </select>
                   <input type="submit" value="ok">
-                </form>
-                <form action="" class="aa-show-form">
+
                   <label for="">Show</label>
-                  <select name="">
-                    <option value="1" selected="12">12</option>
-                    <option value="2">24</option>
-                    <option value="3">36</option>
+                  <select name="r_show">
+                    <option value="2" <?=($page_info['show']==2?"selected":"")?> >2</option>
+                    <option value="3" <?=($page_info['show']==3?"selected":"")?> >3</option>
+                    <option value="4" <?=($page_info['show']==4?"selected":"")?> >4</option>
                   </select>
                 </form>
               </div>
@@ -128,23 +129,31 @@ $status="";
 
             <div class="aa-product-catg-pagination">
               <nav>
+                  <form action="<?=site_url('product/search');?>" method="POST">
                 <ul class="pagination">
-                  <li>
+                  <!-- <li>
                     <a href="#" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
-                  </li>
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
-                  <li>
+                  </li> -->
+                                <input type="hidden" name="r_search" value="<?=$page_info['search'];?>">
+                                <input type="hidden" name="r_show" value="<?=$page_info['show'];?>">
+                                <input type="hidden" name="r_sort" value="<?=$page_info['sort'];?>">
+<?php
+                                  for($i=0;$i<($page_info['total_product']/$page_info['show']); $i++)
+                                  {
+?>
+                                    <li><input type="submit" value="<?=$i+1?>" formaction="<?=site_url('product/page/'.($i+1));?>"></li>
+<?php
+                                  }
+?>
+                  <!-- <li>
                     <a href="#" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
                     </a>
-                  </li>
+                  </li> -->
                 </ul>
+                              </form>
               </nav>
             </div>
 

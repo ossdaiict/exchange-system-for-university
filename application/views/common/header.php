@@ -59,7 +59,7 @@
               <!-- search box -->
               <div class="aa-search-box">
                 <form action="<?=site_url('product/search');?>" method="POST">
-                  <input type="text" name="r_search" id="" placeholder="Search here ex. 'man' ">
+                  <input type="text" name="r_search" id="" placeholder="Search here ex. 'man' " value="<?=$page_info['search']?>">
                   <button type="submit"><span class="fa fa-search"></span></button>
                 </form>
               </div>
