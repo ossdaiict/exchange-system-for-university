@@ -1,7 +1,7 @@
 <?php
 class Product_m extends CI_Model
 {
-  public function get_all_product_data2($page_info, $where)
+  private function return_fiter_criteria()
   {
     if(isset($page_info['sort']))
       switch($page_info['sort'])
@@ -16,14 +16,25 @@ class Product_m extends CI_Model
       }
     else
     {
-      $sort2=0;
-      $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC';        
+      $sort2 = 0;
+      $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC';
     }
-
-      $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
-      $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
-      $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
-
+    $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
+    $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
+    $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
+    $path=(isset($page_info['path']) ? $page_info['path'] : 1 );
+    return [
+      'sort'=>$sort,
+      'sort2'=>$sort2,
+      'search'=>$search,
+      'show'=>$show,
+      'page_no'=>$page_no,
+      'path'=>$path
+    ];
+  }
+  public function get_all_product_data2($page_info, $where)
+  {
+    $filter=$this->return_fiter_criteria($page_info);
     $this->db
       ->select('p.*, w.wishlist_user_id')
       ->from('product p')
@@ -32,17 +43,17 @@ class Product_m extends CI_Model
       $this->db
         ->where($where);
     
-    if($search!==0)
+    if($filter['search']!==0)
       $this->db
         ->group_start()
-        ->like('p.name', $search)
-        ->or_like('p.description', $search)
+        ->like('p.name', $filter['search'])
+        ->or_like('p.description', $filter['search'])
         ->group_end();
 
     $data2 = $this->db
-      ->order_by($sort)
-      ->limit($show)
-      ->offset(($page_no-1)*$show)
+      ->order_by($filter['sort'])
+      ->limit($filter['show'])
+      ->offset(($filter['page_no']-1)*$filter['show'])
       ->get()
       ->result();
     //die($this->db->last_query());
@@ -51,28 +62,7 @@ class Product_m extends CI_Model
 
   public function get_all_product_count_data2($page_info, $where)
   {
-    if(isset($page_info['sort']))
-      switch($page_info['sort'])
-      {
-        case 0: $sort2=0; $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC'; break;
-        case 1:	$sort2=1; $sort = 'p.name ASC';         break;
-        case 2:	$sort2=2; $sort = 'p.name DESC';        break;
-        case 3:	$sort2=3; $sort = 'p.price ASC';  	    break;
-        case 4:	$sort2=4; $sort = 'p.price DESC';	      break;
-        case 5:	$sort2=5; $sort = 'p.date_added DESC';	break;
-        case 6:	$sort2=6; $sort = 'p.date_added ASC';	  break;
-      }
-      else
-      {
-        $sort2=0;
-        $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC';        
-      }
-
-      $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
-      $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
-      $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
-
-
+    $filter=$this->return_fiter_criteria($page_info);    
     $this->db
       ->select('count(*) as count')
       ->from('product p')
@@ -81,11 +71,11 @@ class Product_m extends CI_Model
       $this->db
         ->where($where);
       
-    if($search!==0)
+    if($filter['search']!==0)
       $this->db
         ->group_start()
-        ->like('p.name', $search)
-        ->or_like('p.description', $search)
+        ->like('p.name', $filter['search'])
+        ->or_like('p.description', $filter['search'])
         ->group_end();
 
     $datatata =  $this->db
@@ -93,11 +83,11 @@ class Product_m extends CI_Model
       ->result()[0]->count;
 
     return [
-      'page_no'=>$page_no,
-      'search'=>($search===0?'':$search),
-      'show'=>$show,
-      'sort'=>$sort2,
-      'path'=>(isset($page_info['path'])?$page_info['path']:''),
+      'page_no'=>$filter['page_no'],
+      'search'=>($filter['search']===0?'':$filter['search']),
+      'show'=>$filter['show'],
+      'sort'=>$filter['sort2'],
+      'path'=>(isset($filter['path'])?$filter['path']:''),
       'total_product'=>$datatata
     ];
   }
@@ -151,109 +141,109 @@ class Product_m extends CI_Model
 
 
 
-  public function get_all_product_data($page_info)
-  {
-    if(isset($page_info['sort']))
-      switch($page_info['sort'])
-      {
-        case 0: $sort2=0; $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC'; break;
-        case 1:	$sort2=1; $sort = 'p.name ASC';         break;
-        case 2:	$sort2=2; $sort = 'p.name DESC';        break;
-        case 3:	$sort2=3; $sort = 'p.price ASC';  	    break;
-        case 4:	$sort2=4; $sort = 'p.price DESC';	      break;
-        case 5:	$sort2=5; $sort = 'p.date_added DESC';	break;
-        case 6:	$sort2=6; $sort = 'p.date_added ASC';	  break;
-      }
-    else
-    {
-      $sort2=0;
-      $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC';        
-    }
+  // public function get_all_product_data($page_info)
+  // {
+  //   if(isset($page_info['sort']))
+  //     switch($page_info['sort'])
+  //     {
+  //       case 0: $sort2=0; $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC'; break;
+  //       case 1:	$sort2=1; $sort = 'p.name ASC';         break;
+  //       case 2:	$sort2=2; $sort = 'p.name DESC';        break;
+  //       case 3:	$sort2=3; $sort = 'p.price ASC';  	    break;
+  //       case 4:	$sort2=4; $sort = 'p.price DESC';	      break;
+  //       case 5:	$sort2=5; $sort = 'p.date_added DESC';	break;
+  //       case 6:	$sort2=6; $sort = 'p.date_added ASC';	  break;
+  //     }
+  //   else
+  //   {
+  //     $sort2=0;
+  //     $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC';        
+  //   }
 
-      $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
-      $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
-      $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
+  //     $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
+  //     $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
+  //     $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
 
-    $this->db
-      ->select('p.*, w.wishlist_user_id')
-      ->from('product p')
-      ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id=".($this->ss->user_id?$this->ss->user_id:0), 'left')
-      ->where([
-                'p.report_status < '  => 2,
-                'p.product_status < ' => 3,
-                'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0)
-        ]);
+  //   $this->db
+  //     ->select('p.*, w.wishlist_user_id')
+  //     ->from('product p')
+  //     ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id=".($this->ss->user_id?$this->ss->user_id:0), 'left')
+  //     ->where([
+  //               'p.report_status < '  => 2,
+  //               'p.product_status < ' => 3,
+  //               'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0)
+  //       ]);
       
-    if($search!==0)
-      $this->db
-        ->group_start()
-        ->like('p.name', $search)
-        ->or_like('p.description', $search)
-        ->group_end();
+  //   if($search!==0)
+  //     $this->db
+  //       ->group_start()
+  //       ->like('p.name', $search)
+  //       ->or_like('p.description', $search)
+  //       ->group_end();
 
-    $data2 = $this->db
-      ->order_by($sort)
-      ->limit($show)
-      ->offset(($page_no-1)*$show)
-      ->get()
-      ->result();
-    //die($this->db->last_query());
-    return $data2;
-  }
+  //   $data2 = $this->db
+  //     ->order_by($sort)
+  //     ->limit($show)
+  //     ->offset(($page_no-1)*$show)
+  //     ->get()
+  //     ->result();
+  //   //die($this->db->last_query());
+  //   return $data2;
+  // }
 
-  public function get_all_product_count_data($page_info)
-  {
-    if(isset($page_info['sort']))
-      switch($page_info['sort'])
-      {
-        case 0: $sort2=0; $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC'; break;
-        case 1:	$sort2=1; $sort = 'p.name ASC';         break;
-        case 2:	$sort2=2; $sort = 'p.name DESC';        break;
-        case 3:	$sort2=3; $sort = 'p.price ASC';  	    break;
-        case 4:	$sort2=4; $sort = 'p.price DESC';	      break;
-        case 5:	$sort2=5; $sort = 'p.date_added DESC';	break;
-        case 6:	$sort2=6; $sort = 'p.date_added ASC';	  break;
-      }
-      else
-      {
-        $sort2=0;
-        $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC';        
-      }
+  // public function get_all_product_count_data($page_info)
+  // {
+  //   if(isset($page_info['sort']))
+  //     switch($page_info['sort'])
+  //     {
+  //       case 0: $sort2=0; $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC'; break;
+  //       case 1:	$sort2=1; $sort = 'p.name ASC';         break;
+  //       case 2:	$sort2=2; $sort = 'p.name DESC';        break;
+  //       case 3:	$sort2=3; $sort = 'p.price ASC';  	    break;
+  //       case 4:	$sort2=4; $sort = 'p.price DESC';	      break;
+  //       case 5:	$sort2=5; $sort = 'p.date_added DESC';	break;
+  //       case 6:	$sort2=6; $sort = 'p.date_added ASC';	  break;
+  //     }
+  //     else
+  //     {
+  //       $sort2=0;
+  //       $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC';        
+  //     }
 
-      $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
-      $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
-      $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
+  //     $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
+  //     $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
+  //     $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
 
 
-    $this->db
-      ->select('count(*) as count')
-      ->from('product p')
-      ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id=".($this->ss->user_id?$this->ss->user_id:0), 'left')
-      ->where([
-                'p.report_status < '  => 2,
-                'p.product_status < ' => 3,
-                'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0)
-        ]);
+  //   $this->db
+  //     ->select('count(*) as count')
+  //     ->from('product p')
+  //     ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id=".($this->ss->user_id?$this->ss->user_id:0), 'left')
+  //     ->where([
+  //               'p.report_status < '  => 2,
+  //               'p.product_status < ' => 3,
+  //               'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0)
+  //       ]);
       
-    if($search!==0)
-      $this->db
-        ->group_start()
-        ->like('p.name', $search)
-        ->or_like('p.description', $search)
-        ->group_end();
+  //   if($search!==0)
+  //     $this->db
+  //       ->group_start()
+  //       ->like('p.name', $search)
+  //       ->or_like('p.description', $search)
+  //       ->group_end();
 
-    $datatata =  $this->db
-      ->get()
-      ->result()[0]->count;
+  //   $datatata =  $this->db
+  //     ->get()
+  //     ->result()[0]->count;
 
-    return [
-      'page_no'=>$page_no,
-      'search'=>($search===0?'':$search),
-      'show'=>$show,
-      'sort'=>$sort2,
-      'total_product'=>$datatata
-    ];
-  }
+  //   return [
+  //     'page_no'=>$page_no,
+  //     'search'=>($search===0?'':$search),
+  //     'show'=>$show,
+  //     'sort'=>$sort2,
+  //     'total_product'=>$datatata
+  //   ];
+  // }
 
   // public function get_all_product_data($logged_in_user_id, $status)
   // {

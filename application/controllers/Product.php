@@ -392,6 +392,8 @@ class Product extends CI_Controller {
 	{
 		if(!$this->ss->email)
 			redirect('login/');
+		
+
 	}
 
 
