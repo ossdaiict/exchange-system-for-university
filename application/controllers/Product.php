@@ -7,11 +7,49 @@ class Product extends CI_Controller {
 		Parent::__construct();
 		$this->load->model('Product_m', 'pm', true);
 	}
+
+	public function return_filter_where($path)
+	{
+		switch($path)
+		{
+			case "product/wishlist":
+				return [
+					'p.report_status < '  => 2,
+					'p.product_status < ' => 3,
+					'p.seller_id != '     => $this->ss->user_id,
+					'w.wishlist_user_id !='=>''
+				];
+		
+			break;
+
+			case "product/seller_list":
+				return [
+					'p.seller_id'     => $this->ss->user_id
+				];
+			break;
+
+			default :
+				return [
+					'p.report_status < '  => 2,
+					'p.product_status < ' => 3,
+					'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0)
+				];
+			break;
+
+		}
+	}
+
 	public function index()
 	{
 		$data = [];
-		$data['page_info'] = $this->pm->get_all_product_count_data($data);
-		$data['products'] = $this->pm->get_all_product_data($data['page_info']);
+		$where = [
+			'p.report_status < '  => 2,
+			'p.product_status < ' => 3,
+			'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0)
+		];
+		$data['page_info'] = $this->pm->get_all_product_count_data2($data, $where);
+		$data['page_info']['path'] = 'product/index';
+		$data['products'] = $this->pm->get_all_product_data2($data['page_info'], $where);
 		$data['categories'] = $this->pm->get_all_category_data();
 		// echo "<pre>";
 		// print_r($data['products']);
@@ -212,7 +250,18 @@ class Product extends CI_Controller {
 	
 	public function category($cat)
 	{
-		$data['products'] = $this->pm->get_all_product_with_x_category_data($this->ss->user_id,0,$cat);
+		$data = [
+			'search' => $this->input->post('r_search'),
+		];
+		$where = [
+			'p.report_status < '  => 2,
+			'p.product_status < ' => 3,
+			'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0),
+			'p.category'=>$cat
+		];
+		$data['page_info'] = $this->pm->get_all_product_count_data2($data, $where);
+		$data['page_info']['path'] = 'product/category/'.$cat;
+		$data['products'] = $this->pm->get_all_product_data2($data, $where);
 		$data['categories'] = $this->pm->get_all_category_data();
 		// echo "<pre>";
 		// print_r($data['products']);
@@ -233,8 +282,13 @@ class Product extends CI_Controller {
 			$data = [
 				'search' => $this->input->post('r_search'),
 			];
-			$data['page_info'] = $this->pm->get_all_product_count_data($data);
-			$data['products'] = $this->pm->get_all_product_data($data);
+			$where = [
+				'p.report_status < '  => 2,
+				'p.product_status < ' => 3,
+				'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0)
+			];
+			$data['page_info'] = $this->pm->get_all_product_count_data2($data, $where);
+			$data['products'] = $this->pm->get_all_product_data2($data, $where);
 			$data['categories'] = $this->pm->get_all_category_data();
 			// echo '<pre>';
 			// print_r($data);
@@ -255,9 +309,11 @@ class Product extends CI_Controller {
 			'search'=>$this->input->post('r_search'),
 			'show'=>$this->input->post('r_show'),
 			'sort'=>$this->input->post('r_sort'),
+			'path'=>$this->input->post('r_path'),
 		];
-		$data['page_info'] = $this->pm->get_all_product_count_data($data);
-		$data['products'] = $this->pm->get_all_product_data($data['page_info']);
+		$where = $this->return_filter_where($this->input->post('r_path'));
+		$data['page_info'] = $this->pm->get_all_product_count_data2($data, $where);
+		$data['products'] = $this->pm->get_all_product_data2($data['page_info'], $where);
 		$data['categories'] = $this->pm->get_all_category_data();
 		// echo "<pre>";
 		// print_r($data['products']);
@@ -282,8 +338,10 @@ class Product extends CI_Controller {
 				'show'=>$this->input->post('r_show'),
 				'sort'=>$this->input->post('r_sort'),
 			];
-			$data['page_info'] = $this->pm->get_all_product_count_data($data);
-			$data['products'] = $this->pm->get_all_product_data($data['page_info']);
+			$where = $this->return_filter_where($this->input->post('r_path'));
+			$data['page_info'] = $this->pm->get_all_product_count_data2($data, $where);
+			$data['page_info']['path'] = $this->input->post('r_path');
+			$data['products'] = $this->pm->get_all_product_data2($data['page_info'], $where);
 			$data['categories'] = $this->pm->get_all_category_data();
 			// echo "<pre>";
 			// print_r($data['products']);
@@ -295,9 +353,16 @@ class Product extends CI_Controller {
 
 	public function wishlist()
 	{
-		if(!$this->ss->email)
-			redirect('login/');
-		$data['products'] = $this->pm->get_wishlist_product_data($this->ss->user_id, 0);
+		$data = [];
+		$where = [
+			'p.report_status < '  => 2,
+			'p.product_status < ' => 3,
+			'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0),
+			'w.wishlist_user_id !='=>''
+		];
+		$data['page_info'] = $this->pm->get_all_product_count_data2($data, $where);
+		$data['page_info']['path'] = 'product/wishlist';
+		$data['products'] = $this->pm->get_all_product_data2($data['page_info'], $where);
 		$data['categories'] = $this->pm->get_all_category_data();
 		// echo "<pre>";
 		// print_r($data['products']);
@@ -306,13 +371,24 @@ class Product extends CI_Controller {
 		$this->parser->parse('product', $data);
 	}
 
-	public function selllist()
+	public function seller_list()
 	{
 		if(!$this->ss->email)
 			redirect('login/');
+		$data = [];
+		$where = $this->return_filter_where('product/seller_list');
+		$data['page_info'] = $this->pm->get_all_product_count_data2($data, $where);
+		$data['page_info']['path'] = 'product/seller_list';
+		$data['products'] = $this->pm->get_all_product_data2($data['page_info'], $where);
+		$data['categories'] = $this->pm->get_all_category_data();
+		// echo "<pre>";
+		// print_r($data['products']);
+		// echo "</pre>";
+		// die("hello");
+		$this->parser->parse('product', $data);
 	}
 
-	public function buylist()
+	public function bought_list()
 	{
 		if(!$this->ss->email)
 			redirect('login/');

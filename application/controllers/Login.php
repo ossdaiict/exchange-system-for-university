@@ -47,4 +47,28 @@ class Login extends CI_Controller {
       }
     }
 	}
+
+	// public function lost_password()
+	// {
+	// 	$this->fv->set_rules('c_user_id', 'UserID', 'trim|required|integer|exact_length[9]')
+	// 	if($this->fv->run()==false)
+	// 	{
+	// 		redirect('login/');
+	// 	}
+	// 	else
+	// 	{
+	// 		$data = $this->lm->get_user_data($this->input->post('c_user_id'));
+	// 		if(count($data)===1)
+	// 		{
+	// 			//send mail consisting existing password
+	// 			$msg['msg'] = 'check your DA-mail for further instruction.'
+	// 			$this->load->view('login', $msg);
+	// 		}
+	// 		else
+	// 		{
+	// 			redirect('login/');
+	// 		}
+	// 	}
+	// }
+
 }
