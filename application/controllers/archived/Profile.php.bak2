@@ -6,12 +6,12 @@
     public function __construct()
     {
         Parent::__construct();
+        if(!$this->ss->email)
+          redirect('login/');
         $this->load->database();
         $this->load->helper(array('form', 'url'));
         $this->load->model('Profile_m', 'pf', true);
         $this->load->helper('string');
-        if($this->ss->email)
-			redirect('login/');
    }
     
     public function index()
@@ -79,8 +79,8 @@
       
       $user_id=$this->ss->userdata('user_id');
       $d['user']=$this->pf->get_Records($user_id);
-      $this->fv->set_rules('new_pass', 'New Password', 'trim|required|min_length[8]|max_length[32]');
-      $this->fv->set_rules('confirm_pass', 'Confirm Password', 'trim|required|min_length[8]|max_length[32]|matches[new_pass]');
+      $this->fv->set_rules('new_pass', 'Password', 'trim|required|min_length[8]|max_length[32]');
+      $this->fv->set_rules('confirm_pass', 'Password', 'trim|required|min_length[8]|max_length[32]');
       if($this->fv->run()==FALSE)
       {
         $this->parser->parse('profile',$d);
@@ -99,8 +99,7 @@
         $this->view->load('profile',$d);
 			}
 			else{
-          
-        $this->parser->parse('profile',$d);
+          $this->parser->parse('profile',$d);
 			}
       }	
     }
