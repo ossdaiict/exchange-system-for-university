@@ -81,16 +81,19 @@
 				{
 ?>
           <a class="aa-add-to-cart-btn" href="<?=site_url('product/get_product_update/'.$product_id)?>">Update Product</a>
+          <a  class="aa-add-to-cart-btn" href="<?=base_url('product/delete/'.$product_id);?>">Delete Product</a>
 <?php
 					if($wishlist_count>0)
           {
 ?>
-            <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>" method="POST">
+            <div class="row">
+            <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>" method="POST" class="form-group" style="margin-top:10px">
 <?php
               if($seller_id==$this->ss->user_id)
               {
 ?>
-                <select name="c_buyer_id" >
+                <div class="col-md-4">
+                <select name="c_buyer_id" class="form-control input-lg">
 <?php
                   foreach($wishlist_data as $wd)
                   {
@@ -100,12 +103,29 @@
                   }
 ?>
                 </select>
+                </div>
 <?php
               }
 ?>
-              <input name="c_final_price" type="text" placeholder="final price">
-              <input type="submit" value="Mark">
+
+
+
+
+
+
+                <div class="col-md-4">
+                <input name="c_final_price" class="form-control input-lg" type="text" placeholder="Final price">
+                </div>
+                <div class="col-md-4">
+                <input class="aa-add-to-cart-btn" style="background-color:white;" type="submit" value="Mark as Sold">
+                </div>
+
+
+
+
+
             </form>
+                </div>
 <?php
           }
 				}
@@ -136,17 +156,39 @@
           ?>
 					<a class="aa-add-to-cart-btn" href="<?=base_url('product/toggle_wishlist/'.$product_id.'/1');?>"><?=$this->ss->user_id!=$wishlist_user_id?'+ wishlist':'- wishlist'?></a>
 <?php
+          if($has_reported==0 && $this->ss->user_id!=$seller_id)
+          {
+?>
+            <button style="background-color:white" type="button" class="aa-add-to-cart-btn" onclick="toggle_report_form();">Report</button>
+            <form action="<?=site_url('product/report/'.$product_id);?>" method="POST" id="report_form" style="display:none;" class="form-group row">
+              <div class="col-md-12" style="margin-top:15px;">
+                <div class="row">
+                  <div class="col-md-10">
+                  <textarea name="c_reason" class="form-control" id="" cols="30" rows="3"></textarea>
+                  </div>
+                  <div class="col-md-2">
+                    <input type="submit" value="Report" class="btn btn-danger pull-right" style="background-color:#ff6666">                          
+                  </div>
+                </div>
+              </div>
+            </form>
+<?php
+          }
+?>
+<?php
           if($wishlist_user_id==$this->ss->user_id)
           {
             ?>
-              <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>" class="form-group row" style="margin-top:15px;">
-                <div class="col-md-3">
-                <input name="c_final_price" class="form-control col-md-2 col-lg-2" type="text" placeholder="Final price">
+                <div class="row">
+                <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>" class="form-group" style="margin-top:15px;">
+                <div class="col-md-4">
+                <input name="c_final_price" class="form-control input-lg" type="text" placeholder="Final price">
                 </div>
                 <div class="col-md-4">
-                <input class="btn btn-danger" style="background-color:#ff6666;" type="submit" value="Mark as Bought">
+                <input class="aa-add-to-cart-btn" style="background-color:white;" type="submit" value="Mark as Bought">
                 </div>
-              </form>
+                </form>
+                </div>
 
             <?php
           }
@@ -174,28 +216,9 @@
         echo '<p style="color:green">Status : Sold</p>';
 		}
 ?>
-<?php
-if($has_reported==0 && $this->ss->user_id!=$seller_id)
-{
-?>
-                      <button style="background-color:white" type="button" class="aa-add-to-cart-btn" onclick="meee();">Report</button>
-                      <form action="<?=site_url('product/report/'.$product_id);?>" method="POST" id="report_form" style="display:none;" class="form-group row">
-                        <div class="col-md-12" style="margin-top:15px;">
-                          <div class="row">
-                            <div class="col-md-10">
-                            <textarea name="c_reason" class="form-control" id="" cols="30" rows="3"></textarea>
-                            </div>
-                            <div class="col-md-2">
-                              <input type="submit" value="Report" class="btn btn-danger pull-right" style="background-color:#ff6666">                          
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-<?php
-}
-?>
+
 <script>
-  function meee()
+  function toggle_report_form()
   {
     //alert("helllllo");
     var report_form = document.getElementById('report_form');

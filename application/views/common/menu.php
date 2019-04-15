@@ -19,8 +19,8 @@
                   <li class="hidden-xs"><a href="<?=site_url('product/add_product_form');?>">Add product</a></li>
                   <li class="hidden-xs"><a href="<?=site_url('product/');?>">Product List</a></li>
                   <li class="hidden-xs"><a href="<?=site_url('product/wishlist');?>">Wishlist</a></li>
-                  <li class="hidden-xs"><a href="<?=site_url('product/bought');?>">Bought Items</a></li>
-                  <li class="hidden-xs"><a href="<?=site_url('product/seller');?>">Seller Items</a></li>
+                  <li class="hidden-xs"><a href="<?=site_url('product/bought_list');?>">Bought Items</a></li>
+                  <li class="hidden-xs"><a href="<?=site_url('product/seller_list');?>">Seller Items</a></li>
                   <li>
 <?php
                       if($this->ss->email)

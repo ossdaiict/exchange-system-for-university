@@ -1,8 +1,8 @@
 <?php
-// echo "<pre>";
-// print_r($page_info);
-// echo "</pre>";
- //  die("hello");
+echo "<pre>";
+print_r($page_info);
+echo "</pre>";
+//die("hello");
 ?>
 <?php
 	$path_prefix=base_url('asset/user/');
@@ -20,6 +20,7 @@
             <div class="aa-product-catg-head">
               <div class="aa-product-catg-head-left">
                 <form action="<?=site_url('product/sort_show/')?>" method="POST" class="aa-sort-form">
+                  <input type="hidden" name="r_path" value="<?=$page_info['path']?>">
                   <input type="hidden" name="r_search" value="<?=$page_info['search']?>">
                   <label for="">Sort by</label>
                   <select name="r_sort">
@@ -61,7 +62,7 @@
                       <span class="aa-product-price">Price : ₹ <?=$p->price?></span>
                       <p class="aa-product-descrip">Category : <?=$p->category?></p>
                       <p class="aa-product-descrip">Description : <?=$p->description?></p>
-                      <a class="btn btn-danger" style="background-color:#ff6666" href="<?=site_url('product/'.$p->product_id)?>" class="btn" style="background-color:white">View Details</a>
+                      <a class="btn btn-danger" style="background-color:#ff6666" href="<?=site_url('product/'.$p->product_id)?>" class="btn" style="background-color:white"><span class="fa fa-info-circle"></span> View Details</a>
                       <?php
                       if($this->ss->user_id && $p->seller_id!=$this->ss->user_id)
                       {
@@ -72,7 +73,8 @@
                       elseif($this->ss->user_id)
                       {
 ?>
-                        <a  class="btn btn-danger" style="background-color:#ff6666"  href="<?=base_url('product/update_product_form/'.$p->product_id);?>"><span class="fa fa-edit"></span>Update Info.</a>
+                        <a  class="btn btn-danger" style="background-color:#ff6666"  href="<?=base_url('product/update_product_form/'.$p->product_id);?>"><span class="fa fa-edit"></span> Update Info.</a>
+                        <a  class="btn btn-danger" style="background-color:#ff6666"  href="<?=base_url('product/delete/'.$p->product_id);?>"><span class="fa fa-trash"></span> Delete Product</a>
 
 <?php                 }
 ?>
@@ -102,6 +104,9 @@ $status="";
   {
     case 1:
       $status="Reported | ";
+    break;
+    case 2:
+      $status="Blocked | ";
     break;
   }
   switch($p->product_status)
@@ -141,6 +146,8 @@ $status="";
                                 <input type="hidden" name="r_search" value="<?=$page_info['search'];?>">
                                 <input type="hidden" name="r_show" value="<?=$page_info['show'];?>">
                                 <input type="hidden" name="r_sort" value="<?=$page_info['sort'];?>">
+                                <input type="hidden" name="r_path" value="<?=$page_info['path']?>">
+
 <?php
                                   for($i=0;$i<($page_info['total_product']/$page_info['show']); $i++)
                                   {
