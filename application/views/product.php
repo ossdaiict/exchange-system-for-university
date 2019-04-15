@@ -129,7 +129,7 @@ $status="";
             </div>
 
 
-            <div class="aa-product-catg-pagination">
+            <div class="aa-product-catg-pagination" style="margin-bottom: 50px;">
               <nav>
                   <form action="<?=site_url('product/search');?>" method="POST">
                 <ul class="pagination" style="border:none;">

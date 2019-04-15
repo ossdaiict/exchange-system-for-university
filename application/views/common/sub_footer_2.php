@@ -1,4 +1,4 @@
-    <div class="aa-footer-bottom">
+    <div class="aa-footer-bottom" style="position: fixed; bottom:0; width:100%; background-color: black;">
       <div class="container">
         <div class="row">
         <div class="col-md-12">
