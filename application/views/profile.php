@@ -7,7 +7,8 @@
   //$this->load->view('common/banner');
   ?>
   
-
+    <!-- AdminLTE style sheet -->
+    <link href="<?=$path_prefix?>css/AdminLTE.css" rel="stylesheet">    
   <section class="container"> 
   <div class="container">
     <div class="row">

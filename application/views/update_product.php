@@ -18,7 +18,7 @@
                 <?php if(isset($msg)) { echo $msg."<br>"; }
                 if(isset($error)) { echo $error."<br>"; }
                 ?>
-                 <form action="<?=site_url('Product2/update_product/'.$product[0]->product_id)?>" method="POST" class="aa-login-form" enctype="multipart/form-data">
+                 <form action="<?=site_url('product/update_product/'.$product[0]->product_id)?>" method="POST" class="aa-login-form" enctype="multipart/form-data">
                   <label for="">Product Name<span>*</span></label>
                   <input name="u_name" type="text" placeholder="iPhone Xs" value="<?=$product[0]->name?>" required autofocus>
                   <?=form_error('u_name');?>
@@ -61,11 +61,10 @@
                       <div class="col-md-6">
                             <label for="">Return Window<span>*</span></label><br>
                             <select name="u_return_window" class="form-control" id="">
-                              <option value="" disabled><?php echo $product[0]->return_window; ?></option>
                               <option value="0" <?php if($product[0]->return_window == 0) { echo "selected"; } ?>>No Return</option>
                               <?php for($i = 1; $i <= 7; $i++) 
                               { ?>
-                                <option value="<?=$i?>" <?php if($product[0]->return_window==$i) { echo 'selected'; } ?> ><?=$i?> Days</option>
+                                <option value="<?=$i?>" <?php if($product[0]->return_window==$i) { echo 'selected'; } ?> ><?=$i?> Day</option>
                               <?php } ?>
                               <?php echo $product[0]->return_window; ?>
                             </select>

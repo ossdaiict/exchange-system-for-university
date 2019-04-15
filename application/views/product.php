@@ -1,7 +1,7 @@
 <?php
- echo "<pre>";
- print_r($page_info);
-  echo "</pre>";
+// echo "<pre>";
+// print_r($page_info);
+// echo "</pre>";
  //  die("hello");
 ?>
 <?php
@@ -31,7 +31,6 @@
                     <option value="5" <?=($page_info['sort']==5?"selected":"")?> >Date new -> old</option>
                     <option value="6" <?=($page_info['sort']==6?"selected":"")?> >Date old -> new</option>
                   </select>
-                  <input type="submit" value="ok">
 
                   <label for="">Show</label>
                   <select name="r_show">
@@ -39,6 +38,7 @@
                     <option value="3" <?=($page_info['show']==3?"selected":"")?> >3</option>
                     <option value="4" <?=($page_info['show']==4?"selected":"")?> >4</option>
                   </select>
+                  <input class="btn btn-danger btn-sm" type="submit" value="Apply" style="background-color:#ff6666">
                 </form>
               </div>
               <!-- <div class="aa-product-catg-head-right">
@@ -54,31 +54,33 @@
                   <figure>
                     <a class="aa-product-img" href="<?=site_url('product/'.$p->product_id)?>"><img style="max-width:250px;max-height:300px;" src="<?=$path_prefix?>img/product/<?=$p->main_image?>" alt="polo shirt img"></a>
 
-                    <?php
-                      if($p->seller_id!=$this->ss->user_id)
-                      {
-?>
-                        <a class="aa-add-card-btn" href="<?=base_url('product/toggle_wishlist/'.$p->product_id);?>"><?=$p->wishlist_user_id!=''?'- wishlist':'+ wishlist'?></a>
-<?php
-                      }
-                      else
-                      {
-?>
-                        <a class="aa-add-card-btn" href="<?=base_url('product/get_product_update/'.$p->product_id);?>"><span class="fa fa-edit"></span>Update Info.</a>
 
-<?php                 }
-?>
-                    <a href="<?=site_url('product/'.$p->product_id)?>" class="btn" style="background-color:white">View Details</a>
+
                     <figcaption>
                       <h4 class="aa-product-title"><a href="<?=site_url('product/'.$p->product_id)?>"><?=$p->name?></a></h4>
                       <span class="aa-product-price">Price : ₹ <?=$p->price?></span>
                       <p class="aa-product-descrip">Category : <?=$p->category?></p>
                       <p class="aa-product-descrip">Description : <?=$p->description?></p>
+                      <a class="btn btn-danger" style="background-color:#ff6666" href="<?=site_url('product/'.$p->product_id)?>" class="btn" style="background-color:white">View Details</a>
+                      <?php
+                      if($this->ss->user_id && $p->seller_id!=$this->ss->user_id)
+                      {
+?>
+                        <a  class="btn btn-danger" style="background-color:#ff6666"  href="<?=base_url('product/toggle_wishlist/'.$p->product_id);?>"><?=$p->wishlist_user_id!=''?'- wishlist':'+ wishlist'?></a>
+<?php
+                      }
+                      elseif($this->ss->user_id)
+                      {
+?>
+                        <a  class="btn btn-danger" style="background-color:#ff6666"  href="<?=base_url('product/update_product_form/'.$p->product_id);?>"><span class="fa fa-edit"></span>Update Info.</a>
+
+<?php                 }
+?>
                     </figcaption>
                   </figure>                         
                   <!-- <div class="aa-product-hvr-content">
 <?php
-                      if($p->seller_id!=$this->ss->user_id)
+                      if($this->ss->user_id && $p->seller_id!=$this->ss->user_id)
                       {
 ?>
                         <a href="<?=base_url('product/toggle_wishlist/'.$p->product_id);?>" data-toggle="tooltip" data-placement="top" title="<?=$p->wishlist_user_id!=''?'Remove from wishlist':'Add to wishlist'?>"><span class="<?=$p->wishlist_user_id!=''?'fa fa-heart':'fa fa-heart-o'?>"></span></a>
@@ -86,7 +88,7 @@
                       else
                       {
 ?>
-                        <a href="<?=base_url('product/get_product_update/'.$p->product_id);?>" data-toggle="tooltip" data-placement="top" title="Update info."><span class="fa fa-edit"></span></a>                      
+                        <a href="<?=base_url('product/update_product_form/'.$p->product_id);?>" data-toggle="tooltip" data-placement="top" title="Update info."><span class="fa fa-edit"></span></a>                      
 <?php                 }
 ?>
 
@@ -130,7 +132,7 @@ $status="";
             <div class="aa-product-catg-pagination">
               <nav>
                   <form action="<?=site_url('product/search');?>" method="POST">
-                <ul class="pagination">
+                <ul class="pagination" style="border:none;">
                   <!-- <li>
                     <a href="#" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
@@ -143,7 +145,7 @@ $status="";
                                   for($i=0;$i<($page_info['total_product']/$page_info['show']); $i++)
                                   {
 ?>
-                                    <li><input type="submit" value="<?=$i+1?>" formaction="<?=site_url('product/page/'.($i+1));?>"></li>
+                                    <li><input class="btn btn-danger" style="background-color:#ff6666" type="submit" value="<?=$i+1?>" formaction="<?=site_url('product/page/'.($i+1));?>"></li>
 <?php
                                   }
 ?>

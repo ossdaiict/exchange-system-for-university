@@ -19,7 +19,7 @@ class Register extends CI_Controller {
 	{
     $this->fv->set_rules('c_user_id', 'DA Student ID', 'trim|required|integer|exact_length[9]|is_unique[user.user_id]');
     $this->fv->set_rules('c_password', 'Password', 'trim|required|min_length[8]|max_length[32]');
-    $this->fv->set_rules('c_name', 'Name', 'trim|required|min_length[3]|max_length[50]');
+    $this->fv->set_rules('c_name', 'Name', 'trim|required|regex_match[/a-zA-Z /]|min_length[3]|max_length[50]', ['regex_match'=>'Only alphabets and space are allowed.']);
     $this->fv->set_rules('c_contact_no', 'Contact No', 'trim|required|integer|exact_length[10]');
     $this->fv->set_rules('c_agreement', 'Agreement', 'trim|required|integer|greater_than[0]',array('required' => 'Read and Accept T&C to continue!'));
     if($this->fv->run()==FALSE)

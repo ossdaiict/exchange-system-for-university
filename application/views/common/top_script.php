@@ -29,8 +29,7 @@
     <!-- Main style sheet -->
     <link href="<?=$path_prefix?>css/style.css" rel="stylesheet">    
 
-    <!-- AdminLTE style sheet -->
-    <link href="<?=$path_prefix?>css/AdminLTE.css" rel="stylesheet">    
+
 
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>

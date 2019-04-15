@@ -22,7 +22,7 @@
                 <?php if(isset($msg)) { echo $msg."<br>"; }
                 if(isset($error_msg)) { echo $error_msg."<br>"; }
                 ?>
-                 <form action="<?=site_url('Product2/add_product')?>" method="POST" class="aa-login-form" enctype="multipart/form-data">
+                 <form action="<?=site_url('product/add_product')?>" method="POST" class="aa-login-form" enctype="multipart/form-data">
                   <label for="">Product Name<span>*</span></label>
                   <input name="c_name" type="text" placeholder="iPhone Xs" value="<?=set_value('c_name');?>" required autofocus>
                   <?=form_error('c_name');?>
@@ -113,6 +113,8 @@
               <div class="col-md-12">
                 <div class="aa-myaccount-login">
                   <h4>Report Status</h4>
+                  <h5 class="text-danger">You are seeing this because you have 1 or more products that needs some update like change in status or deleting it or marking as available</h5>
+                  <h5 class="text-danger">once you update those product's informaation you will be able to add new product</h5>
                   <table class="table table-responsive table-hover table-striped">
                     <tr>
                       <th>Product Name</th>
@@ -131,8 +133,8 @@
                       <td><?=$past[$i]->price?></td>
                       <td><?=$past[$i]->description?></td>
                       <td style="white-space: nowrap;">
-                        <a href="<?=base_url('Product2/availablity/'.$past[$i]->product_id)?>" class="btn btn-info">Available</a> &nbsp;
-                        <a href="<?=base_url("Product/product_detail/".$past[$i]->product_id)?>" class="btn btn-success">Give Detail status</a>
+                        <a href="<?=base_url('product/availablity/'.$past[$i]->product_id)?>" class="btn btn-success">Mark as Available</a> &nbsp;
+                        <a href="<?=base_url("product/".$past[$i]->product_id)?>" class="btn btn-warning">Product Detail</a>
                       </td>
                     </tr>
                     <?php

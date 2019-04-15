@@ -4,7 +4,7 @@
 <!-- Start header section -->
   <header id="aa-header">
     <!-- start header top  -->
-    <div class="aa-header-top">
+    <!-- <div class="aa-header-top">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -12,6 +12,7 @@
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
                   <li><a href="<?=site_url('profile/');?>">My Account</a></li>
+                  <li class="hidden-xs"><a href="<?=site_url('product/add_product_form');?>">Add product</a></li>
                   <li class="hidden-xs"><a href="<?=site_url('product/wishlist');?>">Wishlist</a></li>
                   <li class="hidden-xs"><a href="<?=site_url('product/bought');?>">Bought Items</a></li>
                   <li class="hidden-xs"><a href="<?=site_url('product/seller');?>">Seller Items</a></li>
@@ -33,7 +34,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- / header top  -->
 
     <!-- start header bottom  -->
@@ -59,7 +60,7 @@
               <!-- search box -->
               <div class="aa-search-box">
                 <form action="<?=site_url('product/search');?>" method="POST">
-                  <input type="text" name="r_search" id="" placeholder="Search here ex. 'man' " value="<?=$page_info['search']?>">
+                  <input type="text" name="r_search" id="" placeholder="e.g., Discrete Mathematics " value="<?=(isset($page_info['search'])?$page_info['search']:'')?>">
                   <button type="submit"><span class="fa fa-search"></span></button>
                 </form>
               </div>

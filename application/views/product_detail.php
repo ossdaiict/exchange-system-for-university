@@ -129,7 +129,11 @@
 				{
 					echo '<p style="color:green">Status : Available</p>';          
 ?>
-
+          <?=$this->ss->user_id==$wishlist_user_id?
+          'Seller : '.$seller_data[0]->name.'</br>Contact No: '.$seller_data[0]->contact_no.'</br>Email : '.$seller_data[0]->email.'</br>'
+          :
+          ''          
+          ?>
 					<a class="aa-add-to-cart-btn" href="<?=base_url('product/toggle_wishlist/'.$product_id.'/1');?>"><?=$this->ss->user_id!=$wishlist_user_id?'+ wishlist':'- wishlist'?></a>
 <?php
           if($wishlist_user_id==$this->ss->user_id)
@@ -209,7 +213,7 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
             <div class="aa-product-details-bottom">
               <ul class="nav nav-tabs" id="myTab2">
                 <li><a href="#review" data-toggle="tab">Reviews</a></li>                
-                <li><a href="#description" data-toggle="tab">Description</a></li>
+                <!-- <li><a href="#description" data-toggle="tab">Description</a></li> -->
               </ul>
 
               <!-- Tab panes -->
@@ -295,7 +299,7 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
 
                  </div>
                 </div>
-                <div class="tab-pane fade" id="description">
+                <!-- <div class="tab-pane fade" id="description">
                   <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                   <ul>
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, culpa!</li>
@@ -306,14 +310,14 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                   </ul>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, iusto earum voluptates autem esse molestiae ipsam, atque quam amet similique ducimus aliquid voluptate perferendis, distinctio!</p>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ea, voluptas! Aliquam facere quas cumque rerum dolore impedit, dicta ducimus repellat dignissimos, fugiat, minima quaerat necessitatibus? Optio adipisci ab, obcaecati, porro unde accusantium facilis repudiandae.</p>
-                </div>
+                </div> -->
               </div>
             </div>
             <!-- Related product -->
-            <div class="aa-product-related-item">
+            <!-- <div class="aa-product-related-item">
               <h3>Related Products</h3>
               <ul class="aa-product-catg aa-related-item-slider">
-                <!-- start single product item -->
+
                 <li>
                   <figure>
                     <a class="aa-product-img" href="#"><img src="<?=$path_prefix;?>img/product/man/polo-shirt-2.png" alt="polo shirt img"></a>
@@ -328,10 +332,10 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
                     <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>                            
                   </div>
-                  <!-- product badge -->
+
                   <span class="aa-badge aa-sale" href="#">SALE!</span>
                 </li>
-                 <!-- start single product item -->
+ 
                 <li>
                   <figure>
                     <a class="aa-product-img" href="#"><img src="<?=$path_prefix;?>img/product/women/girl-2.png" alt="polo shirt img"></a>
@@ -346,10 +350,10 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
                     <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
-                  <!-- product badge -->
+
                    <span class="aa-badge aa-sold-out" href="#">Sold Out!</span>
                 </li>
-                <!-- start single product item -->
+
                 <li>
                   <figure>
                     <a class="aa-product-img" href="#"><img src="<?=$path_prefix;?>img/product/man/t-shirt-1.png" alt="polo shirt img"></a>
@@ -364,10 +368,10 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
                     <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
-                  <!-- product badge -->
+
                    <span class="aa-badge aa-hot" href="#">HOT!</span>
                 </li>
-                <!-- start single product item -->
+
                 <li>
                   <figure>
                     <a class="aa-product-img" href="#"><img src="<?=$path_prefix;?>img/product/women/girl-3.png" alt="polo shirt img"></a>
@@ -383,7 +387,7 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                     <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
                 </li>
-                <!-- start single product item -->
+
                 <li>
                   <figure>
                     <a class="aa-product-img" href="#"><img src="<?=$path_prefix;?>img/product/man/polo-shirt-1.png" alt="polo shirt img"></a>
@@ -399,7 +403,7 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                     <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
                 </li>
-                <!-- start single product item -->
+
                 <li>
                   <figure>
                     <a class="aa-product-img" href="#"><img src="<?=$path_prefix;?>img/product/women/girl-4.png" alt="polo shirt img"></a>
@@ -414,10 +418,10 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
                     <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
-                  <!-- product badge -->
+
                   <span class="aa-badge aa-sold-out" href="#">Sold Out!</span>
                 </li>    
-                <!-- start single product item -->
+
                 <li>
                   <figure>
                     <a class="aa-product-img" href="#"><img src="<?=$path_prefix;?>img/product/man/polo-shirt-4.png" alt="polo shirt img"></a>
@@ -432,10 +436,10 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
                     <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
-                  <!-- product badge -->
+
                   <span class="aa-badge aa-hot" href="#">HOT!</span>
                 </li> 
-                <!-- start single product item -->
+
                 <li>
                   <figure>
                     <a class="aa-product-img" href="#"><img src="<?=$path_prefix;?>img/product/women/girl-1.png" alt="polo shirt img"></a>
@@ -450,18 +454,17 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
                     <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>                            
                   </div>
-                  <!-- product badge -->
+
                   <span class="aa-badge aa-sale" href="#">SALE!</span>
                 </li>                                                                                   
               </ul>
-              <!-- quick view modal -->                  
+                                
               <div class="modal fade" id="quick-view-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">                      
                     <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       <div class="row">
-                        <!-- Modal view slider -->
                         <div class="col-md-6 col-sm-6 col-xs-12">                              
                           <div class="aa-product-view-slider">                                
                             <div class="simpleLens-gallery-container" id="demo-1">
@@ -493,7 +496,6 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                             </div>
                           </div>
                         </div>
-                        <!-- Modal view content -->
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <div class="aa-product-view-content">
                             <h3>T-Shirt</h3>
@@ -532,11 +534,10 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
                         </div>
                       </div>
                     </div>                        
-                  </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
+                  </div>
+                </div>
               </div>
-              <!-- / quick view modal -->   
-            </div>  
+            </div>   -->
           </div>
         </div>
       </div>
@@ -546,7 +547,7 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
 
 
   <!-- Subscribe section -->
-  <section id="aa-subscribe">
+  <!-- <section id="aa-subscribe">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -561,7 +562,7 @@ if($has_reported==0 && $this->ss->user_id!=$seller_id)
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
   <!-- / Subscribe section -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
