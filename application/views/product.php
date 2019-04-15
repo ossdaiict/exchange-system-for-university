@@ -1,7 +1,7 @@
 <?php
-echo "<pre>";
-print_r($page_info);
-echo "</pre>";
+// echo "<pre>";
+// print_r($page_info);
+// echo "</pre>";
 //die("hello");
 ?>
 <?php

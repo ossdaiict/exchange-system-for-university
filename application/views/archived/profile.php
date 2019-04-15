@@ -6,8 +6,8 @@
   
   //$this->load->view('common/banner');
   ?>
-  <!-- AdminLTE style sheet -->
-  <link href="<?=$path_prefix?>css/AdminLTE.css" rel="stylesheet">
+<!-- AdminLTE style sheet -->
+<link href="<?=$path_prefix?>css/AdminLTE.css" rel="stylesheet">
 
   <section id="aa-account"> 
     <div class="container">
@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="aa-myaccount-area">  
               <div class="row">  
-                <div  class="col-md-8 col-md-offset-2" style="margin-top:50px;">
+                <div  class="col-md-6 col-md-offset-3" style="margin-top:50px;">
                  <div class="aa-myaccount-login">
                     <div class="row">
                       <?php 
@@ -37,70 +37,48 @@
                               <div class="row">
                                 <div class="col-sm-4 border-right">
                                   <div class="description-block">
-                                    <h5 class="description-header">UserID</h5>
-                                    <span class="description-text"> <?php echo $new_user['user_id'] ?></span>
+                                    <h5 class="description-header"><?php echo $new_user['user_id'] ?></h5>
+                                    <span class="description-text">UserID</span>
                                   </div>
                                   <!-- /.description-block -->
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-4 border-right">
                                   <div class="description-block">
-                                    <h5 class="description-header"> Reviews</h5>
-                                    <span class="description-text">13,000</span>
+                                    <h5 class="description-header">13,000</h5>
+                                    <span class="description-text">Reviews</span>
                                   </div>
                                   <!-- /.description-block -->
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-4">
                                   <div class="description-block">
-                                    <h5 class="description-header">Contact Number</h5>
-                                    <span class="description-text"><?php echo $new_user['contact_no'] ?></span>
+                                    <h5 class="description-header"><?php echo $new_user['contact_no'] ?></h5>
+                                    <span class="description-text">Contact Number</span>
                                   </div>
                                   <!-- /.description-block -->
                                   
-                              </div>
-
-                              </div>  
-                                <div class="row" >
-                                        <div class="col-sm-6"style=" border-top: 1px solid #f4f4f4;border-right: 1px solid #f4f4f4;">
-                                          <div class="description-block">
-                                            <h5 class="description-header">Alternate Contact No</h5>
-                                            <span class="description-text"><?= $new_user['alternate_contact_no'] ?></span>
-                                          </div>
-                                          <!-- /.description-block -->
-                                        </div>
-                                        <!-- /.col -->
-                                        <div class="col-sm-6 "style=" border-top: 1px solid #f4f4f4;">
-                                          <div class="description-block">
-                                            <h5 class="description-header">Gender</h5>
-                                            <span class="description-text"><?php 
-                                                $a= $new_user['gender'];
-                                                if($a==0)
-                                                { echo "Male";}
-                                                elseif($a==1)
-                                                { echo "Female";}else{ echo "Other";}
-                                                ?></span>
-                                          </div>
-                                      </div>  
-                                          <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
                                 </div>  
-                              <div class="row" style=" border-top: 1px solid #f4f4f4;">
-                                <div class="col-sm-12 border-right">
-                                  <div class="description-block">
-                                    <h5 class="description-header">Address</h5>
-                                    <span class="description-text"><?= $new_user['address'] ?></span>
-                                  </div>
-                                  
-                                <!-- /.description-block -->
-                              </div>
-                                        <!-- /.col -->
-                                        
-                                        <!-- /.col -->
-                                        
-                                        <!-- /.col -->
-                                </div>   
-                                  
-                                
+                                 
+                                <ul class="list-group list-group-unbordered">
+                                  <li class="list-group-item">
+                                    <b>Alternate contact No.</b> <a class="pull-right"><?= $new_user['alternate_contact_no'] ?></a>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <b>Address</b> <a class="pull-right"><?= $new_user['address'] ?></a>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <b>Gender</b> <a class="pull-right"><?php 
+                                      $a= $new_user['gender'];
+                                      if($a==0)
+                                        { echo "Male";}
+                                      elseif($a==1)
+                                          { echo "Female";}else{ echo "Other";}
+                                      ?></a>
+                                  </li>
+                                </ul>
                                 <!-- /.box --
                                 
                               </div>
@@ -114,21 +92,21 @@
                       }
                       ?> 
                     </div>       
-                    <div class="row">   
+                    <div class="row ">   
                       <?php echo form_open_multipart('Profile/update_data'); ?>
                       <?php 
                       foreach ( $user as $new_user ) {?>
                       
-                        <div class="panel panel-default edit " >
-                            <div class="panel-heading toggle_container">
+                        <div class="panel panel-default edit">
+                            <div class="panel-heading">
                               <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"  >
-                                  Update Information
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                  Edit Inofrmation
                                 </a>
                               </h4>
                             </div> 
                         </div>
-                        <div id="collapseFour" class="panel-collapse collapse " style="padding:20px;" >
+                        <div id="collapseFour" class="panel-collapse collapse" style="padding:20px;">
                           <div class="form-group">
                             <label >Name</label>
                             <input type="text" class="form-control" name="name" value="<?=$new_user['name'];?>"> <?=form_error('name');?>

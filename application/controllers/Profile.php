@@ -6,6 +6,8 @@
     public function __construct()
     {
         Parent::__construct();
+        if(!$this->ss->email)
+          redirect('login/');
         $this->load->database();
         $this->load->helper(array('form', 'url'));
         $this->load->model('Profile_m', 'pf', true);
