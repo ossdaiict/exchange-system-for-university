@@ -50,11 +50,11 @@
    <!-- wpf loader Two -->
 
 
-   <div id="wpf-loader-two">          
+   <!-- <div id="wpf-loader-two">          
       <div class="wpf-loader-two-inner">
         <span>Loading</span>
       </div>
-    </div> 
+    </div>  -->
 
     
     <!-- / wpf loader Two -->       
