@@ -64,13 +64,13 @@ echo "</pre>";
                       <p class="aa-product-descrip">Description : <?=$p->description?></p>
                       <a class="btn btn-danger" style="background-color:#ff6666" href="<?=site_url('product/'.$p->product_id)?>" class="btn" style="background-color:white"><span class="fa fa-info-circle"></span> View Details</a>
                       <?php
-                      if($this->ss->user_id && $p->seller_id!=$this->ss->user_id)
+                      if($this->ss->user_id && $p->seller_id!=$this->ss->user_id && $p->product_status!=3)
                       {
 ?>
                         <a  class="btn btn-danger" style="background-color:#ff6666"  href="<?=base_url('product/toggle_wishlist/'.$p->product_id);?>"><?=$p->wishlist_user_id!=''?'- wishlist':'+ wishlist'?></a>
 <?php
                       }
-                      elseif($this->ss->user_id)
+                      elseif($this->ss->user_id && $p->product_status===0)
                       {
 ?>
                         <a  class="btn btn-danger" style="background-color:#ff6666"  href="<?=base_url('product/update_product_form/'.$p->product_id);?>"><span class="fa fa-edit"></span> Update Info.</a>
