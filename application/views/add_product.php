@@ -114,7 +114,7 @@
                 <div class="aa-myaccount-login">
                   <h4>Report Status</h4>
                   <h5 class="text-danger">You are seeing this because you have 1 or more products that needs some update like change in status or deleting it or marking as available</h5>
-                  <h5 class="text-danger">once you update those product's informaation you will be able to add new product</h5>
+                  <h5 class="text-danger">once you update those product's information you will be able to add new product</h5>
                   <table class="table table-responsive table-hover table-striped">
                     <tr>
                       <th>Product Name</th>

@@ -31,6 +31,9 @@
                         <div class="simpleLens-big-image-container"><a data-lens-image="<?=$path_prefix;?>img/product/{main_image}" class="simpleLens-lens-image"><img src="<?=$path_prefix;?>img/product/{main_image}" class="simpleLens-big-image"></a></div>
                       </div>
                       <div class="simpleLens-thumbnails-container">
+                        <a data-big-image="<?=$path_prefix;?>img/product/{main_image}" data-lens-image="<?=$path_prefix;?>img/product/{main_image}" class="simpleLens-thumbnail-wrapper" href="#">
+                          <img src="<?=$path_prefix;?>img/product/{main_image}" style="height:50px;width:50px;">
+                        </a>
 <?php
                           foreach($product_image as $oi)
                           {
@@ -198,11 +201,11 @@
 				else if($product_status==2)
         {
 ?>
-          <form action="<?=site_url('product/answer_popup/'.$product_id)?>" method="POST">
+          <form action="<?=site_url('product/answer_popup/'.$product_id)?>" method="POST" class="form-group">
             <p>Seller of this product has marked you as buyer with final price of <?=$price?> for this product, please confirm the same !</p> 
-            <input type="radio" name="c_confirm" value="no"> NO, i didn't purchase</br>
-            <input type="radio" name="c_confirm" value="yes"> YES, i did</br>
-            <button type="submit">Confirm</button>
+            <input type="radio" name="c_confirm" value="no" class="form-contro"> NO, i didn't purchase</br>
+            <input type="radio" name="c_confirm" value="yes" class="form-contrl"> YES, i did</br>
+            <button type="submit" class="btn btn-danger" style="background-color:#ff6666">Confirm</button>
           </form>
 <?php
         }
