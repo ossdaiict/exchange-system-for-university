@@ -53,7 +53,7 @@ class Register extends CI_Controller {
 	{
 		if (! preg_match('/^[a-zA-Z\s]+$/', $fullname)) 
 		{
-        $this->form_validation->set_message('alpha_dash_space', 'The Name field may only contain alpha characters & White spaces');
+        $this->fv->set_message('alpha_dash_space', 'The Name field may only contain alpha characters & White spaces');
         return FALSE;
     } else {
         return TRUE;
