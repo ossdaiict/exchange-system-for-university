@@ -68,12 +68,13 @@ if (! function_exists('tomail'))
 
 if(! function_exists('send_mail_MAB_by_seller'))
 {
-    function send_mail_MAB_by_seller($to_buyer, $product_id, $product_name, $seller_name)
+    function send_mail_MAB_by_seller($to_buyer, $product_id, $product_name, $seller_name, $price)
     {
-            $ci = get_instance();
+        $ci = get_instance();
         $data['id'] = $product_id;
         $data['name'] = $product_name;
         $data['seller'] = $seller_name;
+        $data['price'] = $price;
         $subject = $data['name']." is marked as sold to you";
         $msg = $ci->load->view('mail/marked_as_bought_by_seller',$data, TRUE);
         $p = tomail($to_buyer, $subject, $msg);
@@ -123,20 +124,23 @@ if (! function_exists('send_mail_register_verification'))
         }
     }
 }
-    // public function send_mail_report_threshold_to_seller($to_seller, $name)
-    // {
-        // $ci = get_instance();
-    //     $data['name'] = $name;
-    //     $msg = $ci->load->view('mail/report',$data, TRUE);
-    //     $subject = $name." is blocked";
-    //     $p = tomail($to_seller, $subject, $msg);
+if(! function_exists('send_mail_report_threshold_to_seller'))
+{
+    function send_mail_report_threshold_to_seller($to_seller, $name)
+    {
+        $ci = get_instance();
+        $data['name'] = $name;
+        $msg = $ci->load->view('mail/report',$data, TRUE);
+        $subject = $name." is blocked";
+        $p = tomail($to_seller, $subject, $msg);
         
-    //     //IF ERROR THEN WHAT???
-    //     if($p != TRUE)
-    //     {
+        //IF ERROR THEN WHAT???
+        if($p != TRUE)
+        {
             
-    //     }
-    // }
+        }
+    }
+}
 if(! function_exists('send_mail_forgot_password'))
 {
     function send_mail_forgot_password($to, $password)
@@ -154,36 +158,61 @@ if(! function_exists('send_mail_forgot_password'))
         }
     }
 }
-    // public function send_mail_MAB_rejected_by_seller($to_buyer, $product_name, $buyer_name)
-    // {
-        // $ci = get_instance();
-    //     $data['name'] = $product_name;
-    //     $data['buyer'] = $buyer_name;
-    //     $msg = $ci->load->view('mail/mab_rejected_by_seller', $data, TRUE);
-    //     $subject = "Change request for product status rejected";
-    //     $p = tomail($to_buyer, $subject, $msg);
+if(! function_exists('send_mail_MAB_rejected_by_seller'))
+{
+    function send_mail_MAB_rejected_by_seller($to_buyer, $product_name, $buyer_name)
+    {
+        $ci = get_instance();
+        $data['name'] = $product_name;
+        $data['buyer'] = $buyer_name;
+        $msg = $ci->load->view('mail/mab_rejected_by_seller', $data, TRUE);
+        $subject = "Change request for product status rejected";
+        $p = tomail($to_buyer, $subject, $msg);
         
-    //     //IF ERROR THEN WHAT???
-    //     if($p != TRUE)
-    //     {
-            
-    //     }
-    // }
-
-    // public function send_mail_MAB_rejected_by_buyer($to_seller, $product_name, $seller_name)
-    // {
-        // $ci = get_instance();
-    //     $data['name'] = $product_name;
-    //     $data['seller'] = $seller_name;
-    //     $msg = $ci->load->view('mail/mab_rejected_by_buyer',$data, TRUE);
-    //     $subject = "Change request for product status rejected";
-    //     $p = tomail($to_seller, $subject, $msg);
+        //IF ERROR THEN WHAT???
+        if($p == TRUE)
+        {
+            return TRUE;
+        }
+    }
+}
+if(! function_exists('send_mail_MAB_rejected_by_buyer'))
+{
+    function send_mail_MAB_rejected_by_buyer($to_seller, $product_name, $seller_name)
+    {
+        $ci = get_instance();
+        $data['name'] = $product_name;
+        $data['seller'] = $seller_name;
+        $msg = $ci->load->view('mail/mab_rejected_by_buyer',$data, TRUE);
+        $subject = "Change request for product status rejected";
+        $p = tomail($to_seller, $subject, $msg);
         
-    //     //IF ERROR THEN WHAT???
-    //     if($p != TRUE)
-    //     {
-            
-    //     }
-    // }
-
+        //IF ERROR THEN WHAT???
+        if($p == TRUE)
+        {
+            return TRUE;
+        }
+    }
+}
+if(! function_exists('send_mail_MAB_accepted'))
+{
+    function send_mail_MAB_accepted($to, $product_name, $marked_by)
+    {
+        $ci = get_instance();
+        $data['name'] = $product_name;
+        $data['marked_by'] = $marked_by;
+        $msg = $ci->load->view('mail/mab_accept',$data, TRUE);
+        $subject = "Change request for product status accepted";
+        $p = tomail($to, $subject, $msg);
+        
+        //IF ERROR THEN WHAT???
+        if($p == TRUE)
+        {
+            return TRUE;
+        }
+        else {
+            die("NOT DONE");
+        }
+    }
+}
 ?>

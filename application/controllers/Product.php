@@ -150,7 +150,10 @@ class Product extends CI_Controller {
 				];
 				$this->pm->update_product_data(['product_id'=>$id], ['product_status'=>$MABer]);
 				$this->pm->set_transaction_data($insert);
-				send_mail_MAB_by_buyer($data[0]->seller_id.'@daiict.ac.in', $data[0]->product_id, $data[0]->name, $insert['buyer_id'], $insert['final_price']);
+				if($data[0]->seller_id==$this->ss->user_id)
+					send_mail_MAB_by_buyer($insert['buyer_id'].'@daiict.ac.in', $data[0]->product_id, $data[0]->name, $data[0]->seller_id, $insert['final_price']);
+				else
+					send_mail_MAB_by_buyer($data[0]->seller_id.'@daiict.ac.in', $data[0]->product_id, $data[0]->name, $insert['buyer_id'], $insert['final_price']);
 				redirect('product/'.$id);
 			}
 			else
@@ -179,9 +182,17 @@ class Product extends CI_Controller {
 			{
 				$this->pm->update_product_data(['product_id'=>$pid], ['product_status'=>0]);
 				$this->pm->delete_transaction_data(['product_id'=>$pid]);
+				if($data[0]->seller_id==$this->ss->user_id)
+					send_mail_MAB_rejected_by_seller($data[0]->buyer_id.'@daiict.ac.in', $data[0]->name, $data[0]->seller_id);
+				else
+					send_mail_MAB_rejected_by_seller($data[0]->seller_id.'@daiict.ac.in', $data[0]->name, $data[0]->buyer_id);
 			}
 			elseif($this->input->post('c_confirm')==="yes")
 			{
+				if($data[0]->seller_id==$this->ss->user_id)
+					send_mail_MAB_accepted($data[0]->buyer_id.'@daiict.ac.in', $data[0]->name, $data[0]->seller_id);
+				else
+					send_mail_MAB_accepted($data[0]->seller_id.'@daiict.ac.in', $data[0]->name, $data[0]->buyer_id);
 				$this->pm->update_product_data(['product_id'=>$pid], ['product_status'=>3]);
 				$this->pm->update_transaction_with_current_date_data(['product_id'=>$pid]);
 			}
