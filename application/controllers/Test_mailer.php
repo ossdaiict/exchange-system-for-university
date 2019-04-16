@@ -21,6 +21,7 @@ class Test_mailer extends CI_Controller
         // $this->send_mail_forgot_password($to, "12345678");
         // $this->send_mail_MAB_rejected_by_seller($to, $var);
         // $this->send_mail_MAB_rejected_by_buyer($to, $var);
+        // $this->send_mail_register_verification($to, "BHAI");
     }
 
     public function send_mail_MAB_by_seller($to_buyer, $product_id, $product_name, $seller_name)
