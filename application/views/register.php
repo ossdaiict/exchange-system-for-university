@@ -33,7 +33,7 @@
                     <?=form_error('c_password');?>
 
                     <label class="rememberme" for="rememberme"><input name="c_agreement" type="checkbox" value="1" id="rememberme" required>
-                      <a href="<?=site_url('agreement/')?>">I have read and agree to T&C ?</a>
+                      <a href="<?=site_url('other/tc')?>">I have read and agree to T&C ?</a>
                       <?=form_error('c_agreement');?>
 
                     </label>
