@@ -46,9 +46,9 @@
               <!-- logo  -->
               <div class="aa-logo">
                 <!-- Text based logo -->
-                <a href="index.html">
+                <a href="<?=site_url('product/');?>">
                   <span class="fa fa-shopping-cart"></span>
-                  <p>daily<strong>Shop</strong> <span>Your Shopping Partner</span></p>
+                  <p>CES<strong></strong> <span>Campus Exchange System</span></p>
                 </a>
                 <!-- img based logo -->
                 <!-- <a href="index.html"><img src="<?=$path_prefix?>img/logo.jpg" alt="logo img"></a> -->
