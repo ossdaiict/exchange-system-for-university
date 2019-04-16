@@ -310,13 +310,13 @@
                                 <span class="fa fa-star-o" data-rating="3"></span>
                                 <span class="fa fa-star-o" data-rating="4"></span>
                                 <span class="fa fa-star-o" data-rating="5"></span>
-                                <input type="hidden" name="c_rating" class="rating-value" value="0">
+                                <input type="hidden" name="c_rating" class="rating-value" value="0" required>
                               </div><?=form_error('c_rating');?>
                             </br>
                           </div>
                           <div class="form-group">
                             <label for="message">Your Review for seller</label>
-                            <textarea name="c_review" class="form-control" rows="3" id="message"></textarea>
+                            <textarea name="c_review" class="form-control" rows="3" id="message" required></textarea>
                             <?=form_error('c_review');?>
                           </div>
                           <button type="submit" class="btn btn-default aa-review-submit">Submit</button>
