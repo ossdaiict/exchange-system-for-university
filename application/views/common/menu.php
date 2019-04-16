@@ -32,7 +32,7 @@
               else
               {
 ?>
-                <a href="" data-toggle="modal" data-target="#login-modal">Login</a>
+                <a href="<?=site_url('login/')?>" >Login</a>
 <?php
               }
 ?>
