@@ -66,39 +66,45 @@ if (! function_exists('tomail'))
 }
 
 
-    // public function send_mail_MAB_by_seller($to_buyer, $product_id, $product_name, $seller_name)
-    // {
-            // $ci = get_instance();
-    //     $data['id'] = $product_id;
-    //     $data['name'] = $product_name;
-    //     $data['seller'] = $seller_name;
-    //     $subject = $data['name']." is marked as sold to you";
-    //     $msg = $ci->load->view('mail/marked_as_bought_by_seller',$data, TRUE);
-    //     $p = tomail($to_buyer, $subject, $msg);
+if(! function_exists('send_mail_MAB_by_seller'))
+{
+    function send_mail_MAB_by_seller($to_buyer, $product_id, $product_name, $seller_name)
+    {
+            $ci = get_instance();
+        $data['id'] = $product_id;
+        $data['name'] = $product_name;
+        $data['seller'] = $seller_name;
+        $subject = $data['name']." is marked as sold to you";
+        $msg = $ci->load->view('mail/marked_as_bought_by_seller',$data, TRUE);
+        $p = tomail($to_buyer, $subject, $msg);
 
-    //     //IF ERROR THEN WHAT???
-    //     if($p != TRUE)
-    //     {
+        //IF ERROR THEN WHAT???
+        if($p != TRUE)
+        {
             
-    //     }
-    // }
-
-    // public function send_mail_MAB_by_buyer($to_seller, $product_id, $product_name, $buyer_name)
-    // {
-        // $ci = get_instance();
-    //     $data['id'] = $product_id;
-    //     $data['name'] = $product_name;
-    //     $data['buyer_name'] = $buyer_name;
-    //     $msg = $ci->load->view('mail/marked_as_bought_by_buyer',$data, TRUE);
-    //     $subject = $data['name']." is marked as bought";
-    //     $p = tomail($to_seller, $subject, $msg);
+        }
+    }
+}
+if (! function_exists('send_mail_MAB_by_buyer')) 
+{
+    function send_mail_MAB_by_buyer($to_seller, $product_id, $product_name, $buyer_name, $price)
+    {
+        $ci = get_instance();
+        $data['id'] = $product_id;
+        $data['name'] = $product_name;
+        $data['buyer_name'] = $buyer_name;
+        $data['price'] = $price;
+        $msg = $ci->load->view('mail/marked_as_bought_by_buyer',$data, TRUE);
+        $subject = $data['name']." is marked as bought";
+        $p = tomail($to_seller, $subject, $msg);
         
-    //     //IF ERROR THEN WHAT???
-    //     if($p != TRUE)
-    //     {
-            
-    //     }
-    // }
+        //IF ERROR THEN WHAT???
+        if($p == TRUE)
+        {
+            return TRUE;
+        }
+    }
+}
 if (! function_exists('send_mail_register_verification')) 
 {
     function send_mail_register_verification($to, $student_id, $key)
