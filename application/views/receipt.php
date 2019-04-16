@@ -1,5 +1,6 @@
 <?php
   $path_prefix=base_url('asset/user/');
+	$this->load->helper('date');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +51,7 @@
 					</tr>
 					<tr>
 						<td>Date</td>
-						<td><?=$date_sold?></td>
+						<td><?=nice_date($date_sold,'d-M-Y')?></td>
 					</tr>
 				</tbody>
 			</table>

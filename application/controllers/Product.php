@@ -81,6 +81,7 @@ class Product extends CI_Controller {
 		$data = $this->pm->get_product_data($this->ss->user_id, $id);
 		if(count($data)===1)
 		{
+			$this->load->helper('date');
 			$data[0]->product_image=$this->pm->get_product_image_data($id);
 			$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$id]);
 			$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
