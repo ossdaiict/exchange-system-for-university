@@ -86,9 +86,11 @@ class Product extends CI_Controller {
 			$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
 			$data[0]->has_reported=$this->pm->get_product_report_data($this->ss->user_id, $id);
 			$data[0]->seller_data=$this->pm->get_seller_data($data[0]->seller_id);
-			// echo '<pre>';
-			// print_r($data[0]);
-			// die("hello");
+			if($data[0]->product_status==1)
+				$data[0]->buyer_data=$this->pm->get_buyer_data($data[0]->buyer_id);
+			echo '<pre>';
+			print_r($data[0]);
+			die("hello");
 			$this->parser->parse('product_detail', $data[0]);
 		}
 		else

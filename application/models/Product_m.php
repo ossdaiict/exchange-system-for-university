@@ -511,6 +511,14 @@ class Product_m extends CI_Model
       ->result();
   }
 
+  public function get_buyer_data($buyer_id)
+  {
+    return $this->db
+      ->select('name, contact_no, email')
+      ->where(['user_id'=>$buyer_id])
+      ->get('user')
+      ->result();
+  }
 
 
 
