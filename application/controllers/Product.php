@@ -140,7 +140,7 @@ class Product extends CI_Controller {
 		if(is_numeric($id))
 		{
 			$data = $this->pm->get_product_data($this->ss->user_id, $id);
-			if(count($data)===1 && $this->input->post('c_final_price')!='' && is_numeric((int)$this->input->post('c_final_price')))
+			if(count($data)===1 && trim($this->input->post('c_final_price'))!='' && is_numeric((int)$this->input->post('c_final_price')))
 			{
 				$buyer_id = ($data[0]->seller_id==$this->ss->user_id)?$this->input->post('c_buyer_id'):$this->ss->user_id;
 				$MABer = ($data[0]->seller_id==$this->ss->user_id)?2:1;
