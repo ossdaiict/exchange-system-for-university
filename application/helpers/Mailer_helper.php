@@ -56,7 +56,7 @@ if (! function_exists('tomail'))
         $ret = $ci->em->send();
         if($ret == TRUE)
         {
-            return "Mail sent successfully";
+            return TRUE;
         }
         else
         {
