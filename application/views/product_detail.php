@@ -166,8 +166,8 @@
             <form action="<?=site_url('product/report/'.$product_id);?>" method="POST" id="report_form" style="display:none;" class="form-group row">
               <div class="col-md-12" style="margin-top:15px;">
                 <div class="row">
-                  <div class="col-md-10">
-                  <textarea name="c_reason" class="form-control" id="" cols="30" rows="3"></textarea>
+                  <div class="col-md-6">
+                  <textarea name="c_reason" class="form-control" id="" cols="20" rows="3" required placeholder="Reason of reporting."></textarea>
                   </div>
                   <div class="col-md-2">
                     <input type="submit" value="Report" class="btn btn-danger pull-right" style="background-color:#ff6666">                          
