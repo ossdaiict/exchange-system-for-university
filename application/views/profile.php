@@ -44,10 +44,16 @@
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-4 border-right">
-                                  <div class="description-block">
-                                    <h5 class="description-header"> Reviews</h5>
-                                    <span class="description-text">13,000</span>
-                                  </div>
+                                <div class="description-block">
+                                            <h5 class="description-header">Gender</h5>
+                                            <span class="description-text"><?php 
+                                                $a= $new_user['gender'];
+                                                if($a==0)
+                                                { echo "Male";}
+                                                elseif($a==1)
+                                                { echo "Female";}else{ echo "Other";}
+                                                ?></span>
+                                          </div>
                                   <!-- /.description-block -->
                                 </div>
                                 <!-- /.col -->
@@ -71,34 +77,17 @@
                                         </div>
                                         <!-- /.col -->
                                         <div class="col-sm-6 "style=" border-top: 1px solid #f4f4f4;">
-                                          <div class="description-block">
-                                            <h5 class="description-header">Gender</h5>
-                                            <span class="description-text"><?php 
-                                                $a= $new_user['gender'];
-                                                if($a==0)
-                                                { echo "Male";}
-                                                elseif($a==1)
-                                                { echo "Female";}else{ echo "Other";}
-                                                ?></span>
-                                          </div>
-                                      </div>  
-                                          <!-- /.description-block -->
-                                </div>  
-                              <div class="row" style=" border-top: 1px solid #f4f4f4;">
-                                <div class="col-sm-12 border-right">
-                                  <div class="description-block">
+
+
+                                        <div class="description-block">
                                     <h5 class="description-header">Address</h5>
                                     <span class="description-text"><?= $new_user['address'] ?></span>
                                   </div>
-                                  
-                                <!-- /.description-block -->
-                              </div>
-                                        <!-- /.col -->
-                                        
-                                        <!-- /.col -->
-                                        
-                                        <!-- /.col -->
-                                </div>   
+
+
+                                      </div>  
+                                          <!-- /.description-block -->
+                                </div>  
                                   
                                 
                                 <!-- /.box --
