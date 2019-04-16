@@ -56,8 +56,9 @@ class Test_mailer extends CI_Controller
         }
     }
 
-    public function send_mail_register_verification($to, $key)
+    public function send_mail_register_verification($to, $student_id, $key)
     {
+        $data['id'] = $student_id;
         $data['key'] = $key;
         $msg = $this->parser->parse('mail/registration',$data);
         $subject = 'Thank You for Registering';
