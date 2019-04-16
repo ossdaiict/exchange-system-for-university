@@ -64,7 +64,7 @@
                     ?>
 
                     <div class="aa-price-block">
-                      <p>Price : {price}</p>
+                      <p>Price : ₹ {price}</p>
                     </div>
                     <p>Description : {description}</p>
                     <div class="aa-prod-quantity">

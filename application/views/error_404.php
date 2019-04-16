@@ -13,7 +13,6 @@
           <div class="aa-error-area">
             <h2>404</h2>
             <span>Sorry! Page Not Found</span>
-            <p>Sorry this content has been moved Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, amet perferendis, nemo facere excepturi quis.</p>
             <a href="<?=site_url('product/')?>">Browse Items</a>
           </div>
         </div>

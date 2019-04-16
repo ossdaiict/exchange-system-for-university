@@ -47,7 +47,7 @@
 					</tr>
 					<tr>
 						<td>Price</td>
-						<td><?=$final_price?></td>
+						<td>₹ <?=$final_price?></td>
 					</tr>
 					<tr>
 						<td>Date</td>
