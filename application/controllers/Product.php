@@ -137,7 +137,7 @@ class Product extends CI_Controller {
 		if(is_numeric($id))
 		{
 			$data = $this->pm->get_product_data($this->ss->user_id, $id);
-			if(count($data)===1 && is_numeric($this->input->post('c_final_price')))
+			if(count($data)===1 && is_numeric((int)$this->input->post('c_final_price')))
 			{
 				$buyer_id = ($data[0]->seller_id==$this->ss->user_id)?$this->input->post('c_buyer_id'):$this->ss->user_id;
 				$MABer = ($data[0]->seller_id==$this->ss->user_id)?2:1;
@@ -203,6 +203,7 @@ class Product extends CI_Controller {
 				$data[0]->product_image=$this->pm->get_product_image_data($id);
 				$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$id]);
 				$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
+				$data[0]->seller_data=$this->pm->get_seller_data($data[0]->seller_id);
 				$data[0]->has_reported=$this->pm->get_product_report_data($this->ss->user_id, $id);
 				$this->parser->parse('product_detail', $data[0]);
 			}
@@ -244,6 +245,7 @@ class Product extends CI_Controller {
 				$data[0]->product_image=$this->pm->get_product_image_data($pid);
 				$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$pid]);
 				$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
+				$data[0]->seller_data=$this->pm->get_seller_data($data[0]->seller_id);
 				$data[0]->has_reported=$this->pm->get_product_report_data($this->ss->user_id, $pid);
 				$this->parser->parse('product_detail', $data[0]);
 			}			
