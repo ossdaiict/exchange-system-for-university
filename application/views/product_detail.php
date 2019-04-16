@@ -180,7 +180,7 @@
           {
             ?>
                 <div class="row">
-                <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>" class="form-group" style="margin-top:15px;">
+                <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>" class="form-group" style="margin-top:15px;" method="POST">
                 <div class="col-md-4">
                 <input name="c_final_price" class="form-control input-lg" type="text" placeholder="Final price">
                 </div>
@@ -293,7 +293,7 @@
                       {
 ?>
                         <h4>Add a review</h4>
-                        <form action="<?=site_url('product/add_review/'.$product_id);?>" method="POST" class="aa-review-form">
+                        <form action="<?=site_url('product/add_review/'.$product_id);?>" method="POST" class="aa-review-form" method="POST">
                           <div class="aa-your-rating">
                             <p>Your Rating</p>
                               <div class="star-rating">
