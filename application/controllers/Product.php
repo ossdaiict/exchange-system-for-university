@@ -448,8 +448,24 @@ class Product extends CI_Controller {
 		$this->parser->parse('product', $data);
 	}
 
-
-
+	public function receipt($id)
+	{
+		$data = $this->pm->get_product_data($this->ss->user_id, $id);
+		if(count($data)===1)
+		{
+			$data[0]->product_image=$this->pm->get_product_image_data($id);
+			$data[0]->wishlist_data=$this->pm->get_wishlist_user_data(['product_id'=>$id]);
+			$data[0]->seller_review=$this->pm->get_seller_review_data($data[0]->seller_id);
+			$data[0]->has_reported=$this->pm->get_product_report_data($this->ss->user_id, $id);
+			$data[0]->seller_data=$this->pm->get_seller_data($data[0]->seller_id);
+			if($data[0]->product_status!=0)
+				$data[0]->buyer_data=$this->pm->get_buyer_data($data[0]->buyer_id);
+			// echo '<pre>';
+			// print_r($data[0]);
+			// die("hello");
+			$this->parser->parse('receipt', $data[0]);
+		}
+	}
 
 
 

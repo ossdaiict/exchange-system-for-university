@@ -5,6 +5,7 @@ class Test_mailer extends CI_Controller
 {
     public function index()
     {
+        $this->load->view('receipt');
         //TESTING DATA
 
         //$this->send_mail_MAB_by_buyer('201812112@daiict.ac.in', array('id' => 50, 'name' => 'MOTO'));

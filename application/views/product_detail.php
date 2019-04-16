@@ -214,7 +214,12 @@
 		else
 		{
 			if($this->ss->user_id==$buyer_id)
-        echo '<p style="color:green">Status : Bought by you'.($rating===NULL?', please consider reviewing seller</p>':'</p>');
+      {
+        echo '<p style="color:green">Status : Bought by you'.($rating===NULL?', please consider reviewing seller</p>':'</p>');        
+        ?>
+        <a href="<?=site_url('product/receipt/'.$product_id)?>" class="aa-add-to-cart-btn" style="background-color:white;">Get Receipt</a>
+        <?php
+      }
 			else if($this->ss->user_id==$seller_id)
         echo '<p style="color:green">Status : Sold</p>';
 		}
