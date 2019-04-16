@@ -62,8 +62,8 @@
         else
         {
           $img = $this->upload->data();
-          print_r($img);
-          die();
+          // print_r($img);
+          // die();
           $data['photo']=$img['file_name'];
           $this->parser->parse('profile', $data);
         }

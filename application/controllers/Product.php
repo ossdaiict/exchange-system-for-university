@@ -618,17 +618,18 @@ class Product extends CI_Controller {
 										$v = $this->pm->add_image($uploadImgData);
 										if($v == true)
 										{
-												$this->parser->parse('product',$mag);
+											redirect('product/');
 										}
-										else {
-												$mag['error_msg'] = "Error uploading other images. please try after sometime";
-												$this->parser->parse('product',$mag);
+										else
+										{
+											$mag['error_msg'] = "Error uploading other images. please try after sometime";
+											redirect('product/');
 										}
 								}
 								//if secondary image doesn't have any value then redirect to page
 								else
 								{
-										$this->parser->parse('product', $mag);
+									redirect('product/');
 								}
 						}
 						else {
