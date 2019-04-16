@@ -139,7 +139,7 @@
             <p><?=$buyer_data[0]->name;?> has marked this product as bought with final price of <?=$final_price?> , please confirm the same !</p> 
             <input type="radio" name="c_confirm" value="no" required> NO, i didn't purchase</br>
             <input type="radio" name="c_confirm" value="yes"> YES, i did</br>
-            <button type="submit">Confirm</button>
+            <button type="submit" class="btn btn-danger" style="background-color:#ff6666">Confirm</button>
           </form>
 <?php 
         }
