@@ -48,27 +48,34 @@ class Login extends CI_Controller {
     }
 	}
 
-	// public function lost_password()
-	// {
-	// 	$this->fv->set_rules('c_user_id', 'UserID', 'trim|required|integer|exact_length[9]')
-	// 	if($this->fv->run()==false)
-	// 	{
-	// 		redirect('login/');
-	// 	}
-	// 	else
-	// 	{
-	// 		$data = $this->lm->get_user_data($this->input->post('c_user_id'));
-	// 		if(count($data)===1)
-	// 		{
-	// 			//send mail consisting existing password
-	// 			$msg['msg'] = 'check your DA-mail for further instruction.'
-	// 			$this->load->view('login', $msg);
-	// 		}
-	// 		else
-	// 		{
-	// 			redirect('login/');
-	// 		}
-	// 	}
-	// }
+	public function lost_password()
+	{
+		$this->fv->set_rules('r_user_id', 'UserID', 'trim|required|integer|exact_length[9]');
+		if($this->fv->run()==false)
+		{
+			redirect('login/');
+		}
+		else
+		{
+			$data = $this->lm->get_user_data($this->input->post('r_user_id'));
+			if(count($data) == 1)
+			{
+				//send mail consisting existing password
+				$var = send_mail_forgot_password($data[0]->email, $data[0]->password);
+				if($var == TRUE)
+				{
+					$msg['msg'] = 'check your DA-mail for further instruction.';
+				}
+				else {
+					$msg['msg'] = "Unable to reset password please check your details properly";
+				}
+				$this->parser->parse('login', $msg);
+			}
+			else
+			{
+				redirect('login/');
+			}
+		}
+	}
 
 }

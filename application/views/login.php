@@ -30,7 +30,7 @@
                   <input name="r_user_id" type="text" placeholder="201xxxxxx" value="<?=set_value('r_user_id');?>" required autofocus>
                   <?=form_error('r_user_id');?>
                    <label for="">Password<span>*</span></label>
-                    <input name="r_password" type="password" placeholder="Password" required>
+                    <input name="r_password" type="password" placeholder="Password">
                     <?=form_error('r_password');?>
                     <?=isset($error)?$error:''?>
                     </br>
