@@ -136,7 +136,7 @@
         {
 ?>
           <form action="<?=site_url('product/answer_popup/'.$product_id)?>" method="POST">
-            <p>Seller of this product has marked you as buyer with final price of <?=$price?> for this product, please confirm the same !</p> 
+            <p>A user has marked this product as bought with final price of <?=$price?> , please confirm the same !</p> 
             <input type="radio" name="c_confirm" value="no"> NO, i didn't purchase</br>
             <input type="radio" name="c_confirm" value="yes"> YES, i did</br>
             <button type="submit">Confirm</button>

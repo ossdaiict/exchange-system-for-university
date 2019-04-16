@@ -70,7 +70,7 @@
                         <a  class="btn btn-danger" style="background-color:#ff6666"  href="<?=base_url('product/toggle_wishlist/'.$p->product_id);?>"><?=$p->wishlist_user_id!=''?'- wishlist':'+ wishlist'?></a>
 <?php
                       }
-                      elseif($this->ss->user_id && $p->product_status===0)
+                      elseif($this->ss->user_id && $p->product_status==0)
                       {
 ?>
                         <a  class="btn btn-danger" style="background-color:#ff6666"  href="<?=base_url('product/update_product_form/'.$p->product_id);?>"><span class="fa fa-edit"></span> Update Info.</a>
