@@ -35,9 +35,9 @@
 
                   <label for="">Show</label>
                   <select name="r_show">
-                    <option value="2" <?=($page_info['show']==2?"selected":"")?> >2</option>
-                    <option value="3" <?=($page_info['show']==3?"selected":"")?> >3</option>
-                    <option value="4" <?=($page_info['show']==4?"selected":"")?> >4</option>
+                    <option value="5" <?=($page_info['show']==5?"selected":"")?> >5</option>
+                    <option value="10" <?=($page_info['show']==10?"selected":"")?> >10</option>
+                    <option value="15" <?=($page_info['show']==15?"selected":"")?> >15</option>
                   </select>
                   <input class="btn btn-danger btn-sm" type="submit" value="Apply" style="background-color:#ff6666">
                 </form>
@@ -255,7 +255,7 @@ $status="";
               </div>                            
             </div> -->
             <!-- single sidebar -->
-            <div class="aa-sidebar-widget">
+            <!-- <div class="aa-sidebar-widget">
               <h3>Top Rated Products</h3>
               <div class="aa-recently-views">
                 <ul>
@@ -282,7 +282,7 @@ $status="";
                   </li>                                      
                 </ul>
               </div>                            
-            </div>
+            </div> -->
           </aside>
         </div>
        

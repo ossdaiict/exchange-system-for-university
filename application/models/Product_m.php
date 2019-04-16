@@ -21,7 +21,7 @@ class Product_m extends CI_Model
     }
 
       $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
-      $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
+      $show=(isset($page_info['show']) ? $page_info['show'] : 5 );
       $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
 
     $this->db
@@ -70,7 +70,7 @@ class Product_m extends CI_Model
     }
 
       $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
-      $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
+      $show=(isset($page_info['show']) ? $page_info['show'] : 5 );
       $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
 
 
