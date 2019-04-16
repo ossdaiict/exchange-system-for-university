@@ -8,4 +8,11 @@ class Login_m extends CI_Model
       ->get('user')
       ->result();
   }
+  public function get_user_data($id)
+  {
+    return $this
+      ->where(['is_verified'=> 1, 'user_id'=>$id])
+      ->get('user')
+      ->result();
+  }
 }

@@ -5,13 +5,13 @@
   {
     public function __construct()
     {
-        Parent::__construct();
-        $this->load->database();
-        $this->load->helper(array('form', 'url'));
-        $this->load->model('Profile_m', 'pf', true);
-        $this->load->helper('string');
-        if($this->ss->email)
-			redirect('login/');
+      Parent::__construct();
+      $this->load->database();
+      $this->load->helper(array('form', 'url'));
+      $this->load->model('Profile_m', 'pf', true);
+      $this->load->helper('string');
+      if(!$this->ss->email)
+        redirect('login/');
    }
     
     public function index()

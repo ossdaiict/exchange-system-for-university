@@ -80,7 +80,7 @@
 				if($product_status==0) //available
 				{
 ?>
-          <a class="aa-add-to-cart-btn" href="<?=site_url('product/get_product_update/'.$product_id)?>">Update Product</a>
+          <a class="aa-add-to-cart-btn" href="<?=site_url('product/update_product_form/'.$product_id)?>">Update Product</a>
           <a  class="aa-add-to-cart-btn" href="<?=base_url('product/delete/'.$product_id);?>">Delete Product</a>
 <?php
 					if($wishlist_count>0)

@@ -28,12 +28,27 @@ class Product extends CI_Controller {
 				];
 			break;
 
-			default :
+			case "product/bought_list":
 				return [
-					'p.report_status < '  => 2,
-					'p.product_status < ' => 3,
-					'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0)
+					'p.product_status ' => 3,
+					't.buyer_id'     => $this->ss->user_id,
 				];
+			break;
+
+			default :
+				if(substr($path, 0, 17)=="product/category/")
+					return [
+						'p.report_status < '  => 2,
+						'p.product_status < ' => 3,
+						'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0),
+						'p.category'					=> substr($path, 17)
+					];
+				else
+					return [
+						'p.report_status < '  => 2,
+						'p.product_status < ' => 3,
+						'p.seller_id != '     => ($this->ss->user_id?$this->ss->user_id:0)
+					];
 			break;
 
 		}
@@ -78,6 +93,18 @@ class Product extends CI_Controller {
 		}
 		else
 			redirect('error/404');
+	}
+
+	public function delete($id)
+	{
+		$data = $this->pm->get_product_data($this->ss->user_id, $id);
+		if(count($data)===1 && $data[0]->seller_id==$this->ss->user_id && $data[0]->product_status==0)
+		{
+			$this->pm->delete_product_data($id);
+			redirect('product/');
+		}
+		else
+			redirect('error/404	');		
 	}
 
 	public function toggle_wishlist($id, $redirect_back=false)
@@ -392,8 +419,19 @@ class Product extends CI_Controller {
 	{
 		if(!$this->ss->email)
 			redirect('login/');
-		
-
+			if(!$this->ss->email)
+			redirect('login/');
+		$data = [];
+		$where = $this->return_filter_where('product/bought_list');
+		$data['page_info'] = $this->pm->get_all_product_count_data2($data, $where);
+		$data['page_info']['path'] = 'product/bought_list';
+		$data['products'] = $this->pm->get_all_product_data2($data['page_info'], $where);
+		$data['categories'] = $this->pm->get_all_category_data();
+		// echo "<pre>";
+		// print_r($data['products']);
+		// echo "</pre>";
+		// die("hello");
+		$this->parser->parse('product', $data);
 	}
 
 

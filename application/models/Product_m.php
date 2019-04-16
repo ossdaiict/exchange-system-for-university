@@ -1,7 +1,7 @@
 <?php
 class Product_m extends CI_Model
 {
-  private function return_fiter_criteria()
+  public function get_all_product_data2($page_info, $where)
   {
     if(isset($page_info['sort']))
       switch($page_info['sort'])
@@ -19,41 +19,31 @@ class Product_m extends CI_Model
       $sort2 = 0;
       $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC';
     }
-    $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
-    $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
-    $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
-    $path=(isset($page_info['path']) ? $page_info['path'] : 1 );
-    return [
-      'sort'=>$sort,
-      'sort2'=>$sort2,
-      'search'=>$search,
-      'show'=>$show,
-      'page_no'=>$page_no,
-      'path'=>$path
-    ];
-  }
-  public function get_all_product_data2($page_info, $where)
-  {
-    $filter=$this->return_fiter_criteria($page_info);
+
+      $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
+      $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
+      $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
+
     $this->db
-      ->select('p.*, w.wishlist_user_id')
+      ->select('p.*, w.wishlist_user_id, t.buyer_id, t.date_sold')
       ->from('product p')
-      ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id=".($this->ss->user_id?$this->ss->user_id:0), 'left');
+      ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id=".($this->ss->user_id?$this->ss->user_id:0), 'left')
+      ->join('transaction t', "p.product_id=t.product_id and t.date_sold!=''", 'left');
     if($where!==false)
       $this->db
         ->where($where);
     
-    if($filter['search']!==0)
+    if($search!==0)
       $this->db
         ->group_start()
-        ->like('p.name', $filter['search'])
-        ->or_like('p.description', $filter['search'])
+        ->like('p.name', $search)
+        ->or_like('p.description', $search)
         ->group_end();
 
     $data2 = $this->db
-      ->order_by($filter['sort'])
-      ->limit($filter['show'])
-      ->offset(($filter['page_no']-1)*$filter['show'])
+      ->order_by($sort)
+      ->limit($show)
+      ->offset(($page_no-1)*$show)
       ->get()
       ->result();
     //die($this->db->last_query());
@@ -62,20 +52,42 @@ class Product_m extends CI_Model
 
   public function get_all_product_count_data2($page_info, $where)
   {
-    $filter=$this->return_fiter_criteria($page_info);    
+    if(isset($page_info['sort']))
+      switch($page_info['sort'])
+      {
+        case 0: $sort2=0; $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC'; break;
+        case 1:	$sort2=1; $sort = 'p.name ASC';         break;
+        case 2:	$sort2=2; $sort = 'p.name DESC';        break;
+        case 3:	$sort2=3; $sort = 'p.price ASC';  	    break;
+        case 4:	$sort2=4; $sort = 'p.price DESC';	      break;
+        case 5:	$sort2=5; $sort = 'p.date_added DESC';	break;
+        case 6:	$sort2=6; $sort = 'p.date_added ASC';	  break;
+      }
+    else
+    {
+      $sort2 = 0;
+      $sort = 'p.report_status ASC, p.product_status ASC, p.date_added DESC';
+    }
+
+      $search=(isset($page_info['search']) && $page_info['search']!='' ? $page_info['search'] : 0 );
+      $show=(isset($page_info['show']) ? $page_info['show'] : 2 );
+      $page_no=(isset($page_info['page_no']) ? $page_info['page_no'] : 1 );
+
+
     $this->db
       ->select('count(*) as count')
       ->from('product p')
-      ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id=".($this->ss->user_id?$this->ss->user_id:0), 'left');
-    if($where!==false)
+      ->join('wishlist w', "p.product_id=w.product_id and w.wishlist_user_id=".($this->ss->user_id?$this->ss->user_id:0), 'left')
+      ->join('transaction t', "p.product_id=t.product_id and t.date_sold!=''", 'left');
+      if($where!==false)
       $this->db
         ->where($where);
       
-    if($filter['search']!==0)
+    if($search!==0)
       $this->db
         ->group_start()
-        ->like('p.name', $filter['search'])
-        ->or_like('p.description', $filter['search'])
+        ->like('p.name', $search)
+        ->or_like('p.description', $search)
         ->group_end();
 
     $datatata =  $this->db
@@ -83,11 +95,11 @@ class Product_m extends CI_Model
       ->result()[0]->count;
 
     return [
-      'page_no'=>$filter['page_no'],
-      'search'=>($filter['search']===0?'':$filter['search']),
-      'show'=>$filter['show'],
-      'sort'=>$filter['sort2'],
-      'path'=>(isset($filter['path'])?$filter['path']:''),
+      'page_no'=>$page_no,
+      'search'=>($search===0?'':$search),
+      'show'=>$show,
+      'sort'=>$sort2,
+      'path'=>(isset($page_info['path'])?$page_info['path']:''),
       'total_product'=>$datatata
     ];
   }
@@ -259,6 +271,12 @@ class Product_m extends CI_Model
   //     ->result();
   //   return $data;
   // }
+
+  public function delete_product_data($id)
+  {
+    $this->db->delete('product', ['product_id'=>$id]);
+  }
+
 
   public function get_all_product_with_x_category_data($logged_in_user_id, $status, $category)
   {
