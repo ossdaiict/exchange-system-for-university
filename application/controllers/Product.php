@@ -88,9 +88,9 @@ class Product extends CI_Controller {
 			$data[0]->seller_data=$this->pm->get_seller_data($data[0]->seller_id);
 			if($data[0]->product_status==1)
 				$data[0]->buyer_data=$this->pm->get_buyer_data($data[0]->buyer_id);
-			echo '<pre>';
-			print_r($data[0]);
-			die("hello");
+			// echo '<pre>';
+			// print_r($data[0]);
+			// die("hello");
 			$this->parser->parse('product_detail', $data[0]);
 		}
 		else
