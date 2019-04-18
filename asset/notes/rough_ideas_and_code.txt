@@ -1,0 +1,316 @@
+contact info on added to wishlist
+
+MAB_button()
+	for seller a form with dropdown of WLed users and a price box
+	for buyer price box
+update product info button with link to update(same as in product list)
+answer popup()
+	confirmation box for buyer and seller with radio button or yes no button
+
+
+
+bring count of people wishlisted that item on list or detail ??
+display according to product status
+error controller named Error with index($error_no)
+
+
+
+C
+R
+U
+E - error
+password - 8 - 32
+
+login link in register
+register and forgot password link in both login
+
+added verification secret to user table
+
+#todo
+send mail for registration
+seperate logi error for validation, invalid id|pass and verification
+lost password
+use formaction on 2 different button in same form for login and lost password
+validate name for alphabets only
+
+for product add
+	single form with 2 image uploads
+		1st main image
+		2nd other images
+make single view for login and load it at both places
+
+==============================================================================================
+buyer could always do following except when he has MAB
+	-added to wishlist()
+	-not added to wishlist()
+seller could always do following
+	-update product()
+
+0 - available
+		-seller
+			-MAB_button()
+
+1 - MAB by buyer
+		-MABer
+			-cant remove from wishlist
+		-seller
+			-show MAB by answering popup() to seller
+
+2 - MAB by seller
+		-seller
+			-select WLer as buyer by seller
+		-buyer
+			-show MAB by answering popup() to buyer
+
+3 - sold
+		-show in list of bought or sold items with respect to party
+
+
+sort by 1 then 4
+
+WL = wishlist
+WLer = guy who added it to wishlist
+MABer = guy who marked it as Bought
+
+MAB = markED as bought
+
+update product()
+	-cant change category
+
+MAB_button() = mark as bought (yet to be marked)
+	-buyer
+		-enter deal price
+			-set product status to 1 and set price in transaction
+	-seller
+		-enter deal price and select user from WL
+			-set product status to 2 and set price and buyer_id in transaction
+
+added to wishlist()
+	-seller contact info
+	-MAB_button()
+	-remove from wishlist
+
+not added to wishlist()
+	- add to wishlist
+
+MAB by answering popup()
+		-accept
+			-set product status to sold and date_sold
+		-deny
+			-set product status to available
+			-delete entry from transaction
+
+
+
+ps = product status
+if(ps==0)
+	show as available
+else if(ps==1 || ps==2)
+	show as in transaction
+else if(ps==3)
+	show in list of bought or sold items with respect to party
+else if(ps==4)
+	sort and show it at end of product list by sorting
+else if(ps==5)
+	dont show anywhere
+
+
+
+=>STATUS
+- product_status
+		- 0 - available
+		- 1 - MAB by buyer
+		- 2 - MAB by seller
+		- 3 - sold
+- report_status
+		- 0 - safe to buy - show as per product_Status
+		- 1 - within threshold	- show at end of list | warn on detail page
+		- 2 - crossed threshold - block display
+
+
+
+
+		if(!sold)
+{
+	if(seller)
+	{
+		if(ps==0)
+		{
+			update_info
+			if(wishlist>0)
+				MAB_button()
+		}
+		else if(ps==1)
+		{
+			answer popup
+		}
+		else if(ps==2)
+		{
+			buyer will answer popup
+		}
+	}
+	else
+	{
+		// if(ps==0)
+		// {
+		// 	add/remove wishlist
+		// }
+		// else if(ps==1)
+		// {
+		// 	if(regular buyer)
+		// 		add/remove wishlist
+		// 	else if(MABer)
+		// 		dont show add/remove wishlist
+		// }
+		// else if(ps==2)
+		// {
+		// 	if(regular buyer)
+		// 		add/remove wishlist
+		// 	else if(MABer)
+		// 		answer popup
+		// }
+		
+		//above work done by below code
+
+		if($this->ss->user_id!=$d[0]->buyer_id)
+			add/remove wishlist
+		else if(ps==2)
+			answer popup
+	}
+}
+else
+{
+	if(buyer)
+		-show in buy list
+	else
+		-show in sell list
+}
+===================================================================================
+<?php
+		if($product_status!=3)
+		{
+			if($this->ss->user_id==$seller_id)
+			{
+				echo 'seller, ';
+				if($product_status==0)
+				{
+					echo 'update_info';
+					if($p[0]->wishlist_count>0)
+						echo 'MAB_button()';
+				}
+				else if($product_status==1)
+					echo 'answer popup';
+				else if($product_status==2)
+					echo 'waiting for buyers confirmation';					
+			}
+			else
+			{
+				if($this->ss->user_id!=$buyer_id && $report_status<2)
+				{
+					if($this->ss->user_id!=$wishlist_user_id)
+						echo 'add wishlist';
+					else
+						echo 'remove wishlist';
+				}
+				else if($product_status==1)
+					echo 'waiting for sellers confirmation';		
+				else if($product_status==2)
+					echo 'answer popup';
+			}
+		}
+		else
+		{
+			if($this->ss->user_id==$buyer_id)
+				echo 'bought';
+			else if($this->ss->user_id==$seller_id)
+				echo 'sold';
+		}
+?>
+=================================================================================
+0 - available
+	-buyer
+		-added to wishlist()
+		-not added to wishlist()
+	-seller
+		-MAB_button()
+		-update product()
+
+1 - MAB by buyer
+	-MABer
+		-cant remove from wishlist
+	-buyer not MABer
+		-added to wishlist()
+		-not added to wishlist()
+	-seller
+		-MAB by answering popup()
+		-update product()
+
+2 - MAB by seller
+	-WLer selected as buyer by seller
+		-MAB by answering popup()
+	-buyer
+		-added to wishlist()
+		-not added to wishlist()
+	-seller
+		-update product()
+
+3 - sold
+	-show in list of bought or sold items with respect to party
+
+
+
+sort by 1 then 4
+
+update product()
+	-cant change category
+added to wishlist()
+	-seller contact info
+	-MAB_button()
+	-remove from wishlist
+not added to wishlist()
+	- add to wishlist
+WL = wishlist
+WLer = guy who added it to wishlist
+MABer = guy who marked it as Bought
+
+MAB = markED as bought
+
+MAB_button() = mark as bought (yet to be marked)
+	-buyer
+		-enter deal price
+			-set product status to 1 and set price in transaction
+	-seller
+		-enter deal price and select user from WL
+			-set product status to 2 and set price and buyer_id in transaction
+
+MAB by answering popup()
+		-accept
+			-set product status to sold and date_sold
+		-deny
+			-set product status to available
+
+			-delete entry from transaction
+ps = product status
+if(ps==0)
+	show as available
+else if(ps==1 || ps==2)
+	show as in transaction
+else if(ps==3)
+	show in list of bought or sold items with respect to party
+else if(ps==4)
+	sort and show it at end of product list by sorting
+else if(ps==5)
+	dont show anywhere
+
+product_status
+	-0 - available
+	-1 - MAB by buyer
+	-2 - MAB by seller
+	-3 - sold
+
+report_status
+	-0 - safe to buy - show as per product_Status
+	-1 - within threshold	- show at end of list | warn on detail page
+	-2 - crossed threshold - block display	
+
+
