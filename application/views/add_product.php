@@ -38,8 +38,8 @@
                     </div>
                     <div class="col-md-6">
                       <label for="">Is Price Negotiable?<span>*</span></label><br>
-                            <input name="c_is_negotiable" type="radio" value="0" class="radio-inline" <?php if(set_value('c_is_negotiable') == 0) { echo "checked"; } ?> required> Yes 
-                            <input name="c_is_negotiable" type="radio" value="1" class="radio-inline" <?php if(set_value('c_is_negotiable') == 1) { echo "checked"; } ?> required> No
+                            <input name="c_is_negotiable" type="radio" value="1" class="radio-inline" <?php if(set_value('c_is_negotiable') == 1) { echo "checked"; } ?> required> Yes 
+                            <input name="c_is_negotiable" type="radio" value="0" class="radio-inline" <?php if(set_value('c_is_negotiable') == 0) { echo "checked"; } ?> required> No
                             <br>
                             <?=form_error('c_is_negotiable');?>
                             <br>
