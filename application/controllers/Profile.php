@@ -96,11 +96,11 @@
 			
 			if((!strcmp($old_pass,$pass))&& (!strcmp($new_pass,$confirm_pass))){
 				$this->pf->change_pass($session_id,$new_pass);
-        $this->view->load('profile',$d);
+       				redirect('profile',$d);
 			}
 			else{
           
-        $this->parser->parse('profile',$d);
+       			 $this->parser->parse('profile',$d);
 			}
       }	
     }
