@@ -282,7 +282,7 @@ class Product extends CI_Controller {
 				if($report_count == 1 || $report_count > 10)
 				{
 					$product_data = ['report_status'=>($report_count==1?1:2)];
-					$where = ['product_id'=>$id];
+					$where = ['product_id'=>$pid];
 					$this->pm->update_product_data($where, $product_data);
 					if($report_count == 10)
 						send_mail_report_threshold_to_seller($pdata[0]->seller_id.'@daiict.ac.in', $pdata[0]->name);
