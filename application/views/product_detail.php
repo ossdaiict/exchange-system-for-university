@@ -136,9 +136,9 @@
         {
 ?>
           <form action="<?=site_url('product/answer_popup/'.$product_id)?>" method="POST">
-            <p><?=$buyer_data[0]->name;?> has marked this product as bought with final price of <?=$final_price?> , please confirm the same !</p> 
-            <input type="radio" name="c_confirm" value="no" required> NO, I didn't sell</br>
-            <input type="radio" name="c_confirm" value="yes"> YES, I did</br>
+            <p><?=$buyer_data[0]->name;?> has marked this product as bought with final price of <?=$final_price?> , Do you agree ?</p> 
+            <input type="radio" name="c_confirm" value="no" required> NO</br>
+            <input type="radio" name="c_confirm" value="yes"> YES</br>
             <button type="submit" class="btn btn-danger" style="background-color:#ff6666">Confirm</button>
           </form>
 <?php 
@@ -203,8 +203,8 @@
 ?>
           <form action="<?=site_url('product/answer_popup/'.$product_id)?>" method="POST" class="form-group">
             <p>Seller of this product has marked you as buyer with final price of <?=$price?> for this product, please confirm the same !</p> 
-            <input type="radio" name="c_confirm" value="no" class="form-contro" required> NO, I didn't purchase</br>
-            <input type="radio" name="c_confirm" value="yes" class="form-contrl"> YES, I did</br>
+            <input type="radio" name="c_confirm" value="no" class="form-contro" required> NO</br>
+            <input type="radio" name="c_confirm" value="yes" class="form-contrl"> YES</br>
             <button type="submit" class="btn btn-danger" style="background-color:#ff6666">Confirm</button>
           </form>
 <?php
