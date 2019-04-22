@@ -1,6 +1,8 @@
 # exchange-system-for-university
 An exchange system for University students to ease buying and selling items.
 
+
+# USAGE
 #Import Database
 -find the latest .sql file from /asset/DB and import it to get database up.
 
