@@ -117,7 +117,7 @@
 
 
                 <div class="col-md-4">
-                <input name="c_final_price" class="form-control input-lg" type="text" placeholder="Final price" required>
+                <input name="c_final_price" class="form-control input-lg" type="text" placeholder="Final price" number required>
                 </div>
                 <div class="col-md-4">
                 <input class="aa-add-to-cart-btn" style="background-color:white;" type="submit" value="Mark as Sold">
@@ -185,7 +185,7 @@
                 <div class="row">
                 <form action="<?=site_url('product/mark_as_sold/'.$product_id)?>" class="form-group" style="margin-top:15px;" method="POST">
                 <div class="col-md-4">
-                <input name="c_final_price" class="form-control input-lg" type="text" placeholder="Final price" required>
+                <input name="c_final_price" class="form-control input-lg" type="text" placeholder="Final price" number required>
                 </div>
                 <div class="col-md-4">
                 <input class="aa-add-to-cart-btn" style="background-color:white;" type="submit" value="Mark as Bought">
