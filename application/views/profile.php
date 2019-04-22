@@ -102,7 +102,10 @@
                       <?php
                       }
                       ?> 
-                    </div>       
+                    </div>
+                    <div class="row">
+                      <?=validation_errors();?>
+                    </div>
                     <div class="row">   
                       <?php echo form_open_multipart('Profile/update_data'); ?>
                       <?php 
