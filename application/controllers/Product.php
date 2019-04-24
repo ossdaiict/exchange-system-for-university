@@ -543,7 +543,7 @@ class Product extends CI_Controller {
 		$this->fv->set_rules('c_is_negotiable', 'Negotiable', 'trim|required|less_than[2]|greater_than[-1]');
 		$this->fv->set_rules('c_return_window', 'Return Window', 'trim|required|less_than[8]|greater_than[-1]');
 		//$this->fv->set_rules('c_image', 'Image', 'required');
-		if($this->fv->run() == true)
+		if($this->fv->run() == true && count($_FILES['c_sec_image']['name']) < 5 )
 		{
 				//varibales for image
 				$config['upload_path'] = './asset/user/img/product/';
