@@ -1,5 +1,18 @@
 # About
 An exchange system for University students to ease buying and selling items.
+## Features
+- View Items
+- Add item for sale
+- Sorting/Searching/Paging
+- Report
+- Show interest and contact seller
+- Login/Register
+
+## Technology
+- PHP
+- Codeigniter
+- MySQL
+- Git
 
 
 # Usage
